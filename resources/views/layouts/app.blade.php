@@ -5,8 +5,8 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Login</title>
-    <link rel="shortcut icon" href="{{ URL::to('assets/img/favicon.png') }}">
+    <title>Login - eLogbook</title>
+    <link rel="shortcut icon" href="{{ URL::to('assets/img/logo.png') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/feather/feather.css') }}">
     <link rel="stylesheet" href="{{ URL::to('assets/plugins/icons/flags/flags.css') }}">
@@ -28,14 +28,9 @@
     </style>
     <div class="main-wrapper login-body">
         <div class="login-wrapper">
-            <div class="container">
                 <div class="loginbox">
-                    <div class="login-left">
-                        <img class="img-fluid" src="{{ URL::to('assets/img/login.png') }}" alt="Logo">
-                    </div>
                     @yield('content')
-                </div>
-            </div>
+                </div>  
         </div>
     </div>
     <script src="{{ URL::to('assets/js/jquery-3.6.0.min.js') }}"></script>

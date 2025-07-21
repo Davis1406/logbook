@@ -74,6 +74,8 @@ Route::controller(HomeController::class)->group(function () {
 
 // ----------------------------- user controller -------------------------//
 Route::controller(UserManagementController::class)->group(function () {
+    Route::get('add/admin', 'createUser')->middleware('auth')->name('add/user');
+    Route::post('store/admin', 'storeUser')->middleware('auth')->name('store/user');
     Route::get('list/users', 'index')->middleware('auth')->name('list/users');
     Route::post('change/password', 'changePassword')->name('change/password');
     Route::get('view/user/edit/{id}', 'userView')->middleware('auth');

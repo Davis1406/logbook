@@ -12,7 +12,7 @@
                             <h3 class="page-title">Welcome Bruklin!</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active">Student</li>
+                                <li class="breadcrumb-item active">Trainee</li>
                             </ul>
                         </div>
                     </div>

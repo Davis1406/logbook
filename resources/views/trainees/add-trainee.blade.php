@@ -8,11 +8,7 @@
                 <div class="row align-items-center">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Add Students</h3>
-                            <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/add/page') }}">Student</a></li>
-                                <li class="breadcrumb-item active">Add Students</li>
-                            </ul>
+                            <h3 class="page-title">Add Trainee</h3>
                         </div>
                     </div>
                 </div>
@@ -23,11 +19,11 @@
                 <div class="col-sm-12">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('student/add/save') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('trainee/add/save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Student Information
+                                        <h5 class="form-title student-info">Trainee Information
                                             <span>
                                                 <a href="javascript:;"><i class="feather-more-vertical"></i></a>
                                             </span>

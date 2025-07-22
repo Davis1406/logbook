@@ -7,25 +7,25 @@ use DB;
 use Hash;
 use Carbon\Carbon;
 use App\Models\User;
-use App\Models\Teacher;
+use App\Models\Supervisor;
 use Brian2694\Toastr\Facades\Toastr;
 
-class TeacherController extends Controller
+class SupervisorController extends Controller
 {
-    /** add teacher page */
-    public function teacherAdd()
+    /** add supervisor page */
+    public function supervisorAdd()
     {
-        return view('teacher.add-teacher');
+        return view('supervisor.add-supervisor');
     }
 
     /** teacher list */
-    public function teacherList()
+    public function supervisorList()
     {
-        $listTeacher = DB::table('users')
-            ->join('teachers','teachers.teacher_id','users.user_id')
-            ->select('users.user_id','users.name','users.avatar','teachers.id','teachers.gender','teachers.mobile','teachers.address')
+        $listSupervisor = DB::table('users')
+            ->join('supervisors','supervisors.supervisor_id','users.id')
+            ->select('users.user_id','users.name','users.avatar','supervisors.id','supervisors.gender','supervisors.mobile','supervisors.address')
             ->get();
-        return view('teacher.list-teachers',compact('listTeacher'));
+        return view('supervisor.list-supervisors',compact('listSupervisor'));
     }
 
     /** teacher Grid */

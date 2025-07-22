@@ -9,9 +9,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\TypeFormController;
 use App\Http\Controllers\Setting;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\SupervisorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,8 +75,8 @@ Route::controller(HomeController::class)->group(function () {
 
 // ----------------------------- user controller -------------------------//
 Route::controller(UserManagementController::class)->group(function () {
-    Route::get('add/admin', 'createUser')->middleware('auth')->name('add/user');
-    Route::post('store/admin', 'storeUser')->middleware('auth')->name('store/user');
+    Route::get('add/user', 'createUser')->middleware('auth')->name('add/user');
+    Route::post('store/user', 'storeUser')->middleware('auth')->name('store/user');
     Route::get('list/users', 'index')->middleware('auth')->name('list/users');
     Route::post('change/password', 'changePassword')->name('change/password');
     Route::get('view/user/edit/{id}', 'userView')->middleware('auth');
@@ -89,21 +90,21 @@ Route::controller(Setting::class)->group(function () {
 });
 
 // ------------------------ student -------------------------------//
-Route::controller(StudentController::class)->group(function () {
-    Route::get('student/list', 'student')->middleware('auth')->name('student/list'); // list student
-    Route::get('student/grid', 'studentGrid')->middleware('auth')->name('student/grid'); // grid student
-    Route::get('student/add/page', 'studentAdd')->middleware('auth')->name('student/add/page'); // page student
-    Route::post('student/add/save', 'studentSave')->name('student/add/save'); // save record student
-    Route::get('student/edit/{id}', 'studentEdit'); // view for edit
-    Route::post('student/update', 'studentUpdate')->name('student/update'); // update record student
-    Route::post('student/delete', 'studentDelete')->name('student/delete'); // delete record student
-    Route::get('student/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
+Route::controller(TraineeController::class)->group(function () {
+    Route::get('trainees/list', 'trainees')->middleware('auth')->name('trainees/list'); // list trainees
+    Route::get('trainees/grid', 'traineestGrid')->middleware('auth')->name('trainees/grid'); // grid trainees
+    Route::get('trainees/add/page', 'traineeAdd')->middleware('auth')->name('trainee/add'); // add trainee
+    Route::post('trainees/add/save', 'traineeSave')->name('trainee/add/save'); // save record trainee
+    Route::get('trainees/edit/{id}', 'studentEdit'); // view for edit
+    Route::post('trainees/update', 'studentUpdate')->name('student/update'); // update record student
+    Route::post('trainees/delete', 'studentDelete')->name('student/delete'); // delete record student
+    Route::get('trainees/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
 });
 
 // ------------------------ teacher -------------------------------//
-Route::controller(TeacherController::class)->group(function () {
-    Route::get('teacher/add/page', 'teacherAdd')->middleware('auth')->name('teacher/add/page'); // page teacher
-    Route::get('teacher/list/page', 'teacherList')->middleware('auth')->name('teacher/list/page'); // page teacher
+Route::controller(SupervisorController::class)->group(function () {
+    Route::get('supervisor/add/page', 'supervisorAdd')->middleware('auth')->name('supervisor/add'); // page teacher
+    Route::get('supervisors/list', 'supervisorList')->middleware('auth')->name('supervisors/list'); // page teacher
     Route::get('teacher/grid/page', 'teacherGrid')->middleware('auth')->name('teacher/grid/page'); // page grid teacher
     Route::post('teacher/save', 'saveRecord')->middleware('auth')->name('teacher/save'); // save record
     Route::get('teacher/edit/{id}', 'editRecord'); // view teacher record

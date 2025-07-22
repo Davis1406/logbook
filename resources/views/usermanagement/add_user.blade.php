@@ -21,7 +21,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('user/store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('store/user') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -73,10 +73,6 @@
                                         <label>Role Name <span class="login-danger">*</span></label>
                                         <select class="form-control select" name="role_name" required>
                                             <option value="Admin" selected>Admin</option>
-                                            <option value="Super Admin">Super Admin</option>
-                                            <option value="Normal User">Normal User</option>
-                                            <option value="Teachers">Teachers</option>
-                                            <option value="Student">Student</option>
                                         </select>
                                     </div>
                                 </div>

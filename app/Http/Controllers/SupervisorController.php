@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use DB;
-use Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Supervisor;
+use App\Models\UserRole;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Log;
 
 class SupervisorController extends Controller
 {
@@ -18,21 +20,21 @@ class SupervisorController extends Controller
         return view('supervisor.add-supervisor');
     }
 
-    /** teacher list */
+    /** supervisor list */
     public function supervisorList()
     {
         $listSupervisor = DB::table('users')
-            ->join('supervisors','supervisors.supervisor_id','users.id')
-            ->select('users.user_id','users.name','users.avatar','supervisors.id','supervisors.gender','supervisors.mobile','supervisors.address')
+            ->join('supervisors', 'supervisors.supervisor_id', 'users.id')
+            ->select('users.user_id', 'users.name', 'users.avatar', 'supervisors.id', 'supervisors.gender', 'supervisors.mobile', 'supervisors.address')
             ->get();
-        return view('supervisor.list-supervisors',compact('listSupervisor'));
+        return view('supervisor.list-supervisors', compact('listSupervisor'));
     }
 
-    /** teacher Grid */
-    public function teacherGrid()
+    /** supevisor Grid */
+    public function supervisorGrid()
     {
-        $teacherGrid = Teacher::all();
-        return view('teacher.teachers-grid',compact('teacherGrid'));
+        $supervisorGrid = Supervisor::all();
+        return view('supervisor.supervisors-grid', compact('supervisorGrid'));
     }
 
     /** save record */
@@ -47,7 +49,7 @@ class SupervisorController extends Controller
             'qualification'   => 'required|string',
             'experience'      => 'required|string',
             'username'        => 'required|string',
-            'email'           => 'required|string',
+            'email'           => 'required|email|unique:users,email',
             'password'        => 'required|string|min:8|confirmed',
             'password_confirmation' => 'required',
             'address'         => 'required|string',
@@ -57,57 +59,67 @@ class SupervisorController extends Controller
             'country'         => 'required|string',
         ]);
 
+        DB::beginTransaction();
+
         try {
-        
-            $dt        = Carbon::now();
-            $todayDate = $dt->toDayDateTimeString();
-            
-                 
-            User::create([
-                'name'      => $request->full_name,
-                'email'     => $request->email,
-                'join_date' => $todayDate,
-                'role_name' => 'Teacher',
-                'password'  => Hash::make($request->password),
+            $todayDate = Carbon::now()->toDayDateTimeString();
+
+            // 1. Create User
+            $user = User::create([
+                'name'         => $request->full_name,
+                'email'        => $request->email,
+                'join_date'    => $todayDate,
+                'role_name'    => 'Supervisor',
+                'phone_number' => $request->mobile,
+                'password'     => Hash::make($request->password),
+                'status'       => 'active',
             ]);
-            $user_id = DB::table('users')->select('user_id')->orderBy('id','DESC')->first();
-            
-            $saveRecord = new Teacher;
-            $saveRecord->teacher_id    = $user_id->user_id;
-            $saveRecord->full_name     = $request->full_name;
-            $saveRecord->gender        = $request->gender;
-            $saveRecord->date_of_birth = $request->date_of_birth;
-            $saveRecord->mobile        = $request->mobile;
-            $saveRecord->joining_date  = $request->joining_date;
-            $saveRecord->qualification = $request->qualification;
-            $saveRecord->experience    = $request->experience;
-            $saveRecord->username      = $request->username;
-            $saveRecord->address       = $request->address;
-            $saveRecord->city          = $request->city;
-            $saveRecord->state         = $request->state;
-            $saveRecord->zip_code      = $request->zip_code;
-            $saveRecord->country       = $request->country;
-            $saveRecord->save();
-   
-            Toastr::success('Has been add successfully :)','Success');
+
+            // 2. Assign Role
+            UserRole::create([
+                'user_id'   => $user->id,
+                'role_id'   => 3,
+                'is_active' => 1,
+            ]);
+
+            // 3. Save Supervisor Record
+            $supervisor = new Supervisor();
+            $supervisor->supervisor_id       = $user->id; 
+            $supervisor->full_name     = $request->full_name;
+            $supervisor->gender        = $request->gender;
+            $supervisor->date_of_birth = $request->date_of_birth;
+            $supervisor->mobile        = $request->mobile;
+            $supervisor->joining_date  = $request->joining_date;
+            $supervisor->qualification = $request->qualification;
+            $supervisor->experience    = $request->experience;
+            $supervisor->username      = $request->username;
+            $supervisor->address       = $request->address;
+            $supervisor->city          = $request->city;
+            $supervisor->state         = $request->state;
+            $supervisor->zip_code      = $request->zip_code;
+            $supervisor->country       = $request->country;
+            $supervisor->save();
+
+            DB::commit();
+            Toastr::success('Supervisor has been added successfully :)', 'Success');
             return redirect()->back();
-        } catch(\Exception $e) {
-            \Log::info($e);
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('fail, Add new record  :)','Error');
-            return redirect()->back();
+            Log::error('Supervisor Save Error: ' . $e->getMessage());
+            Toastr::error('Failed to add new supervisor.', 'Error');
+             return redirect()->route('supervisor/list-supervisors')->with('success', 'User added successfully.');
         }
     }
 
     /** edit record */
     public function editRecord($id)
     {
-        $teacher = Teacher::where('id',$id)->first();
-        return view('teacher.edit-teacher',compact('teacher'));
+        $supervisor = SUpervisor::where('id', $id)->first();
+        return view('supervisor.edit-supervisor', compact('supervisor'));
     }
 
     /** update record teacher */
-    public function updateRecordTeacher(Request $request)
+    public function updateRecordSupervisor(Request $request)
     {
         DB::beginTransaction();
         try {
@@ -127,15 +139,14 @@ class SupervisorController extends Controller
                 'zip_code'      => $request->zip_code,
                 'country'      => $request->country,
             ];
-            Teacher::where('id',$request->id)->update($updateRecord);
-            
-            Toastr::success('Has been update successfully :)','Success');
+            Supervisor::where('id', $request->id)->update($updateRecord);
+
+            Toastr::success('Has been update successfully :)', 'Success');
             DB::commit();
             return redirect()->back();
-           
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('fail, update record  :)','Error');
+            Toastr::error('fail, update record  :)', 'Error');
             return redirect()->back();
         }
     }
@@ -146,13 +157,13 @@ class SupervisorController extends Controller
         DB::beginTransaction();
         try {
 
-            Teacher::destroy($request->id);
+        Supervisor::destroy($request->id);
             DB::commit();
-            Toastr::success('Deleted record successfully :)','Success');
+            Toastr::success('Deleted record successfully :)', 'Success');
             return redirect()->back();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             DB::rollback();
-            Toastr::error('Deleted record fail :)','Error');
+            Toastr::error('Deleted record fail :)', 'Error');
             return redirect()->back();
         }
     }

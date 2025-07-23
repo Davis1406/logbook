@@ -10,9 +10,11 @@ use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\TypeFormController;
 use App\Http\Controllers\Setting;
 use App\Http\Controllers\TraineeController;
-use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SupervisorController;
+use App\Http\Controllers\HospitalController;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -99,22 +101,27 @@ Route::controller(TraineeController::class)->group(function () {
     Route::post('trainees/update', 'studentUpdate')->name('student/update'); // update record student
     Route::post('trainees/delete', 'studentDelete')->name('student/delete'); // delete record student
     Route::get('trainees/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
+    Route::get('trainee/operations', 'operations')->middleware('auth')->name('trainee/operations'); // trainee operations
+
 });
 
-// ------------------------ teacher -------------------------------//
+// ------------------------ Supervisor -------------------------------//
 Route::controller(SupervisorController::class)->group(function () {
-    Route::get('supervisor/add/page', 'supervisorAdd')->middleware('auth')->name('supervisor/add'); // page teacher
-    Route::get('supervisors/list', 'supervisorList')->middleware('auth')->name('supervisors/list'); // page teacher
-    Route::get('teacher/grid/page', 'teacherGrid')->middleware('auth')->name('teacher/grid/page'); // page grid teacher
-    Route::post('teacher/save', 'saveRecord')->middleware('auth')->name('teacher/save'); // save record
-    Route::get('teacher/edit/{id}', 'editRecord'); // view teacher record
-    Route::post('teacher/update', 'updateRecordTeacher')->middleware('auth')->name('teacher/update'); // update record
-    Route::post('teacher/delete', 'teacherDelete')->name('teacher/delete'); // delete record teacher
+    Route::get('supervisor/add/page', 'supervisorAdd')->middleware('auth')->name('supervisor/add'); // page supervisor
+    Route::get('supervisors/list', 'supervisorList')->middleware('auth')->name('supervisors/list'); // page supervisor
+    Route::get('supervisor/grid/page', 'supervisorGrid')->middleware('auth')->name('supervisor/grid/page'); // page grid supervisor
+    Route::post('supervisor/save', 'saveRecord')->middleware('auth')->name('supervisor/save'); // save record
+    Route::get('supervisor/edit/{id}', 'editRecord'); // view supervisor record
+    Route::post('supervisor/update', 'updateRecordSupervisor')->middleware('auth')->name('supervisor/update'); // update record
+    Route::post('supervisor/delete', 'supervisorDelete')->name('supervisor/delete'); // delete record 
 });
 
-// ----------------------- department -----------------------------//
-Route::controller(DepartmentController::class)->group(function () {
-    Route::get('department/list/page', 'departmentList')->middleware('auth')->name('department/list/page'); // department/list/page
-    Route::get('department/add/page', 'indexDepartment')->middleware('auth')->name('department/add/page'); // page add department
-    Route::get('department/edit/page', 'editDepartment')->middleware('auth')->name('department/edit/page'); // page add department
+// ----------------------- hospitals -----------------------------//
+Route::controller(HospitalController::class)->group(function () {
+    Route::get('hospital/list/page', 'hospitalList')->middleware('auth')->name('hospital/list/page');
+    Route::get('hospital/add/page', 'indexHospital')->middleware('auth')->name('hospital/add/page');
+    Route::post('hospital/store', 'storeHospital')->middleware('auth')->name('hospital/store');
+    Route::get('hospital/edit/{id}', 'editHospital')->middleware('auth')->name('hospital/edit');
+    Route::post('hospital/update/{id}', 'updateHospital')->middleware('auth')->name('hospital/update');
+    Route::get('hospital/delete/{id}', 'deleteHospital')->middleware('auth')->name('hospital/delete');
 });

@@ -8,10 +8,10 @@
         <div class="page-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="page-title">Teachers</h3>
+                    <h3 class="page-title">Supervisors</h3>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Teachers</li>
+                        <li class="breadcrumb-item active">Supervisors</li>
                     </ul>
                 </div>
             </div>
@@ -48,12 +48,12 @@
                         <div class="page-header">
                             <div class="row align-items-center">
                                 <div class="col">
-                                    <h3 class="page-title">Teachers</h3>
+                                    <h3 class="page-title">Supervisors</h3>
                                 </div>
                                 <div class="col-auto text-end float-end ms-auto download-grp">
                                     <a href="teachers.html" class="btn btn-outline-gray me-2 active"><i
                                             class="feather-list"></i></a>
-                                    <a href="{{ route('teacher/grid/page') }}" class="btn btn-outline-gray me-2"><i
+                                    <a href="{{ route('supervisor/grid/page') }}" class="btn btn-outline-gray me-2"><i
                                             class="feather-grid"></i></a>
                                     <a href="#" class="btn btn-outline-primary me-2"><i
                                             class="fas fa-download"></i> Download</a>
@@ -113,7 +113,7 @@
                                         <td>{{ $list->address }}</td>
                                         <td class="text-end">
                                             <div class="actions">
-                                                <a href="{{ url('teacher/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
+                                                <a href="{{ url('supervisor/edit/'.$list->id) }}" class="btn btn-sm bg-danger-light">
                                                     <i class="feather-edit"></i>
                                                 </a>
                                                 <a class="btn btn-sm bg-danger-light teacher_delete" data-bs-toggle="modal" data-bs-target="#teacherDelete">
@@ -143,7 +143,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('teacher/delete') }}" method="POST">
+                <form action="{{ route('supervisor/delete') }}" method="POST">
                     @csrf
                     <div class="delete-wrap text-center">
                         <div class="del-icon">

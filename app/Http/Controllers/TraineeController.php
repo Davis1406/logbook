@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use DB;
+use Illuminate\Support\Facades\DB;
 use App\Models\Trainees;
 use App\Models\User;
 use App\Models\UserRole;
@@ -43,53 +43,59 @@ class TraineeController extends Controller
             'roll'          => 'required|string',
             'blood_group'   => 'required|string',
             'religion'      => 'required|string',
-            'email'         => 'required|email|unique:users,email', // Make sure the email is unique in users table
+            'email'         => 'required|email|unique:users,email',
             'class'         => 'required|string',
             'section'       => 'required|string',
             'admission_id'  => 'required|string',
-            'phone_number'  => 'required',
+            'phone_number'  => 'required|string',
+            'password'      => 'required|string|min:8|confirmed',
+            'password_confirmation' => 'required',
             'upload'        => 'required|image',
         ]);
 
         DB::beginTransaction();
+
         try {
-            // 1. Upload photo
+            // Upload photo
             $upload_file = rand() . '.' . $request->upload->extension();
             $request->upload->move(storage_path('app/public/Trainees-photos/'), $upload_file);
 
-            // 2. Create User
-            $user = new User();
-            $user->name         = $request->first_name . ' ' . $request->last_name;
-            $user->email        = $request->email;
-            $user->phone_number = $request->phone_number;
-            $user->password     = Hash::make('default123'); // You can later send password setup link
-            $user->status       = 'active';
-            $user->role_name    = 'trainee';
-            $user->join_date    = Carbon::now()->toDayDateTimeString();
-            $user->save();
+            $todayDate = Carbon::now()->toDayDateTimeString();
 
-            // 3. Assign Role
-            UserRole::create([
-                'user_id' => $user->id,
-                'role_id' => 2, 
+            // Create user
+            $user = User::create([
+                'name'         => $request->first_name . ' ' . $request->last_name,
+                'email'        => $request->email,
+                'phone_number' => $request->phone_number,
+                'password'     => Hash::make($request->password),
+                'status'       => 'active',
+                'role_name'    => 'Trainee',
+                'join_date'    => $todayDate,
             ]);
 
-            // 4. Save Trainee record
+            // Assign role
+            UserRole::create([
+                'user_id'   => $user->id,
+                'role_id'   => 2, // Trainee role
+                'is_active' => 1,
+            ]);
+
+            // Save trainee record
             $trainee = new Trainees();
-            $trainee->trainee_id      = $user->id;
-            $trainee->first_name   = $request->first_name;
-            $trainee->last_name    = $request->last_name;
-            $trainee->gender       = $request->gender;
+            $trainee->trainee_id    = $user->id; // Ensure this column exists
+            $trainee->first_name    = $request->first_name;
+            $trainee->last_name     = $request->last_name;
+            $trainee->gender        = $request->gender;
             $trainee->date_of_birth = $request->date_of_birth;
-            $trainee->roll         = $request->roll;
-            $trainee->blood_group  = $request->blood_group;
-            $trainee->religion     = $request->religion;
-            $trainee->email        = $request->email;
-            $trainee->class        = $request->class;
-            $trainee->section      = $request->section;
-            $trainee->admission_id = $request->admission_id;
-            $trainee->phone_number = $request->phone_number;
-            $trainee->upload       = $upload_file;
+            $trainee->roll          = $request->roll;
+            $trainee->blood_group   = $request->blood_group;
+            $trainee->religion      = $request->religion;
+            $trainee->email         = $request->email;
+            $trainee->class         = $request->class;
+            $trainee->section       = $request->section;
+            $trainee->admission_id  = $request->admission_id;
+            $trainee->phone_number  = $request->phone_number;
+            $trainee->upload        = $upload_file;
             $trainee->save();
 
             DB::commit();
@@ -97,10 +103,12 @@ class TraineeController extends Controller
             return redirect()->back();
         } catch (\Exception $e) {
             DB::rollback();
+            \Log::error('Trainee Save Error: ' . $e->getMessage());
             Toastr::error('Failed to add new trainee. Please try again.', 'Error');
             return redirect()->back();
         }
     }
+
 
     /** view for edit Trainees */
     public function traineesEdit($id)

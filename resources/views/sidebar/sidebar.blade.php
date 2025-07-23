@@ -49,54 +49,69 @@
                     <ul>
                         <li><a href="{{ route('trainees/list') }}"
                                 class="{{ set_active(['trainees/list', 'trainees/grid']) }}">Trainees List</a></li>
-                        <li><a href="{{ route('trainee/add') }}"
-                                class="{{ set_active(['trainees/add/page']) }}">Add Trainee</a></li>
+                        <li><a href="{{ route('trainee/add') }}" class="{{ set_active(['trainees/add/page']) }}">Add
+                                Trainee</a></li>
                         {{-- <li><a class="{{ request()->is('student/edit/*') ? 'active' : '' }}">Edit Trainees</a></li> --}}
                     </ul>
                 </li>
 
                 <li
-                    class="submenu  {{ set_active(['supervisor/add', 'supervisors/list', 'teacher/grid/page', 'teacher/edit']) }} {{ request()->is('teacher/edit/*') ? 'active' : '' }}">
+                    class="submenu  {{ set_active(['supervisor/add', 'supervisors/list', 'supervisor/grid/page', 'supervisor/edit']) }} {{ request()->is('supervisor/edit/*') ? 'active' : '' }}">
                     <a href="#"><i class="fas fa-chalkboard-teacher"></i>
                         <span> Supervisors</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
                         <li><a href="{{ route('supervisors/list') }}"
-                                class="{{ set_active(['supervisors/list', 'teacher/grid/page']) }}">Supervisors List</a>
+                                class="{{ set_active(['supervisors/list', 'supervisor/grid/page']) }}">Supervisors
+                                List</a>
                         </li>
                         <li><a href="{{ route('supervisor/add') }}"
                                 class="{{ set_active(['supervisor/add/page']) }}">Add Supervisors</a></li>
-                        <li><a class="{{ request()->is('teacher/edit/*') ? 'active' : '' }}">Edit Supervisors</a>
+                        <li><a class="{{ request()->is('supervisor/edit/*') ? 'active' : '' }}">Edit Supervisors</a>
                         </li>
                     </ul>
                 </li>
 
-                <li class="submenu {{ set_active(['department/add/page', 'department/edit/page']) }}">
+                <li class="submenu {{ set_active(['hospital/add/page', 'hospital/list/page', 'hospital/edit/page']) }}">
                     <a href="#"><i class="fas fa-building"></i>
                         <span> Hospitals</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="{{ route('department/list/page') }}"
-                                class="{{ set_active(['department/list/page']) }}">Hospital List</a></li>
-                        <li><a href="{{ route('department/add/page') }}"
-                                class="{{ set_active(['department/add/page']) }}">Add Hospital</a></li>
-                        <li><a href="{{ route('department/edit/page') }}"
-                                class="{{ set_active(['department/edit/page']) }}">Edit Hospital</a></li>
+                        <li><a href="{{ route('hospital/list/page') }}"
+                                class="{{ set_active(['hospital/list/page']) }}">Hospital List</a></li>
+                        <li><a href="{{ route('hospital/add/page') }}"
+                                class="{{ set_active(['hospital/add/page']) }}">Add Hospital</a></li>
                     </ul>
                 </li>
                 <li class="submenu">
                     <a href="#"><i class="fas fa-book-reader"></i>
-                        <span> Subjects</span>
+                        <span> Objectives</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
-                        <li><a href="subjects.html">Subject List</a></li>
-                        <li><a href="add-subject.html">Subject Add</a></li>
-                        <li><a href="edit-subject.html">Subject Edit</a></li>
+                        <li><a href="subjects.html">Objective List</a></li>
+                        <li><a href="add-subject.html">Add Objectives</a></li>
+                        <li><a href="edit-subject.html">Edit Objectives</a></li>
                     </ul>
                 </li>
+
+                <li class="submenu {{ set_active(['trainee/operations']) }}">
+                    <a href="#"><i class="fas fa-tasks"></i>
+                        <span> Trainees Operations</span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('trainee/operations') }}"
+                                class="{{ set_active(['trainee/operations']) }}">
+                                Operations
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="{{ set_active(['setting/page']) }}">
                     <a href="{{ route('setting/page') }}">
                         <i class="fas fa-cog"></i>

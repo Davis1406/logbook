@@ -21,7 +21,7 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        <form action="{{ route('teacher/save') }}" method="POST">
+                        <form action="{{ route('supervisor/save') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -45,7 +45,6 @@
                                             <option selected disabled>Select Gender</option>
                                             <option value="Female" {{ old('gender') == 'Female' ? "selected" :"Female"}}>Female</option>
                                             <option value="Male" {{ old('gender') == 'Male' ? "selected" :""}}>Male</option>
-                                            <option value="Others" {{ old('gender') == 'Others' ? "selected" :""}}>Others</option>
                                         </select>
                                         @error('gender')
                                             <span class="invalid-feedback" role="alert">

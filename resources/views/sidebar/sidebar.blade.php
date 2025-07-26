@@ -73,7 +73,8 @@
                     </ul>
                 </li>
 
-                <li class="submenu {{ set_active(['hospital/add/page', 'hospital/list/page', 'hospital/edit/page']) }}">
+                <li
+                    class="submenu {{ set_active(['hospital/add/page', 'hospital/list/page', 'hospital/edit/page']) }}">
                     <a href="#"><i class="fas fa-building"></i>
                         <span> Hospitals</span>
                         <span class="menu-arrow"></span>
@@ -85,39 +86,46 @@
                                 class="{{ set_active(['hospital/add/page']) }}">Add Hospital</a></li>
                     </ul>
                 </li>
-                <li class="submenu">
-                    <a href="#"><i class="fas fa-book-reader"></i>
-                        <span> Objectives</span>
-                        <span class="menu-arrow"></span>
-                    </a>
-                    <ul>
-                        <li><a href="subjects.html">Objective List</a></li>
-                        <li><a href="add-subject.html">Add Objectives</a></li>
-                        <li><a href="edit-subject.html">Edit Objectives</a></li>
-                    </ul>
-                </li>
-
-                <li class="submenu {{ set_active(['trainee/operations']) }}">
+                <li
+                    class="submenu {{ set_active(['operations/list', 'operations/create', 'operations/edit/*', 'operations/view/*']) }}">
                     <a href="#"><i class="fas fa-tasks"></i>
-                        <span> Trainees Operations</span>
+                        <span> Trainee Operations</span>
                         <span class="menu-arrow"></span>
                     </a>
                     <ul>
                         <li>
-                            <a href="{{ route('trainee/operations') }}"
-                                class="{{ set_active(['trainee/operations']) }}">
+                            <a href="{{ route('operations/list') }}" class="{{ set_active(['operations/list']) }}">
                                 Operations
                             </a>
                         </li>
                     </ul>
                 </li>
-
-                <li class="{{ set_active(['setting/page']) }}">
-                    <a href="{{ route('setting/page') }}">
-                        <i class="fas fa-cog"></i>
-                        <span>Settings</span>
+                <li
+                    class="submenu {{ set_active(['training-programmes/list', 'training-programmes/add', 'training-programmes/edit/*', 'rotations/list', 'objectives/list']) }}">
+                    <a href="#"><i class="fas fa-cogs"></i>
+                        <span> Settings</span>
+                        <span class="menu-arrow"></span>
                     </a>
+                    <ul>
+                        <li>
+                            <a href="{{ route('training-programmes.list') }}"
+                                class="{{ set_active(['training-programmes/list', 'training-programmes/add', 'training-programmes/edit/*']) }}">
+                                <i class="fas fa-book-open me-1"></i> Training Programmes
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('rotations.list') }}" class="{{ set_active(['rotations/list']) }}">
+                                <i class="fas fa-sync-alt me-1"></i> Rotations
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('objectives.list') }}" class="{{ set_active(['objectives/list']) }}">
+                                <i class="fas fa-bullseye me-1"></i> Objectives
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
             </ul>
         </div>
     </div>

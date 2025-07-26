@@ -23,4 +23,12 @@ class Trainees extends Model
         'phone_number',
         'upload',
     ];
+
+    public function operations()
+{
+    return $this->hasMany(Operation::class, 'trainee_id');
 }
+}
+
+
+

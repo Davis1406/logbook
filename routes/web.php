@@ -13,6 +13,10 @@ use App\Http\Controllers\TraineeController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\SupervisorController;
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\OperationController;
+use App\Http\Controllers\TrainingProgrammeController;
+use App\Http\Controllers\RotationController;
+use App\Http\Controllers\ObjectiveController;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -99,9 +103,8 @@ Route::controller(TraineeController::class)->group(function () {
     Route::post('trainees/add/save', 'traineeSave')->name('trainee/add/save'); // save record trainee
     Route::get('trainees/edit/{id}', 'studentEdit'); // view for edit
     Route::post('trainees/update', 'studentUpdate')->name('student/update'); // update record student
-    Route::post('trainees/delete', 'studentDelete')->name('student/delete'); // delete record student
+    Route::post('trainees/delete', 'studentDelete')->name('trainees.delete'); // delete record student
     Route::get('trainees/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
-    Route::get('trainee/operations', 'operations')->middleware('auth')->name('trainee/operations'); // trainee operations
 
 });
 
@@ -124,4 +127,56 @@ Route::controller(HospitalController::class)->group(function () {
     Route::get('hospital/edit/{id}', 'editHospital')->middleware('auth')->name('hospital/edit');
     Route::post('hospital/update/{id}', 'updateHospital')->middleware('auth')->name('hospital/update');
     Route::get('hospital/delete/{id}', 'deleteHospital')->middleware('auth')->name('hospital/delete');
+});
+
+
+// ----------------------- training programmes -----------------------------//
+Route::controller(TrainingProgrammeController::class)->group(function () {
+    Route::get('training-programmes/list', 'list')->middleware('auth')->name('training-programmes.list');
+    Route::get('training-programmes/add', 'create')->middleware('auth')->name('training-programmes.add');
+    Route::post('training-programmes/store', 'store')->middleware('auth')->name('training-programmes.store');
+    Route::get('training-programmes/edit/{id}', 'edit')->middleware('auth')->name('training-programmes.edit');
+    Route::post('training-programmes/update/{id}', 'update')->middleware('auth')->name('training-programmes.update');
+    Route::get('training-programmes/delete/{id}', 'destroy')->middleware('auth')->name('training-programmes.delete');
+});
+
+
+// ----------------------- rotations -----------------------------//
+Route::controller(RotationController::class)->group(function () {
+    Route::get('rotations/list', 'list')->middleware('auth')->name('rotations.list');
+    Route::get('rotations/add', 'create')->middleware('auth')->name('rotations.add');
+    Route::post('rotations/store', 'store')->middleware('auth')->name('rotations.store');
+    Route::get('rotations/edit/{id}', 'edit')->middleware('auth')->name('rotations.edit');
+    Route::post('rotations/update/{id}', 'update')->middleware('auth')->name('rotations.update');
+    Route::get('rotations/delete/{id}', 'destroy')->middleware('auth')->name('rotations.delete');
+});
+
+// ----------------------- objectives -----------------------------//
+Route::controller(ObjectiveController::class)->group(function () {
+    Route::get('objectives/list', 'list')->middleware('auth')->name('objectives.list');
+    Route::get('objectives/add', 'create')->middleware('auth')->name('objectives.add');
+    Route::post('objectives/store', 'store')->middleware('auth')->name('objectives.store');
+    Route::get('objectives/edit/{id}', 'edit')->middleware('auth')->name('objectives.edit');
+    Route::post('objectives/update/{id}', 'update')->middleware('auth')->name('objectives.update');
+    Route::get('objectives/delete/{id}', 'destroy')->middleware('auth')->name('objectives.delete');
+});
+
+// ----------------------- operations -----------------------------//
+Route::controller(OperationController::class)->group(function () {
+    // Admin/Trainee List Views
+    Route::get('operations/list', 'list')->middleware('auth')->name('operations/list');
+    
+    // Trainee: Add / Edit Own
+    Route::get('operations/add', 'index')->middleware('auth')->name('operations/add');
+    Route::post('operations/store', 'store')->middleware('auth')->name('operations/store');
+    Route::get('operations/edit/{id}', 'edit')->middleware('auth')->name('operations/edit');
+    Route::post('operations/update/{id}', 'update')->middleware('auth')->name('operations/update');
+
+    // Supervisor: Approve/Reject Operation
+    Route::get('operations/approve/{id}', 'approve')->middleware('auth')->name('operations/approve');
+    Route::get('operations/reject/{id}', 'reject')->middleware('auth')->name('operations/reject');
+
+    // Common: View & Delete
+    Route::get('operations/view/{id}', 'view')->middleware('auth')->name('operations/view');
+    Route::get('operations/delete/{id}', 'destroy')->middleware('auth')->name('operations/delete');
 });

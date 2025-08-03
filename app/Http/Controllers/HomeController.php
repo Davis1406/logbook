@@ -6,42 +6,39 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
     }
 
-    /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
-    /** home dashboard */
+    /** Redirect to appropriate dashboard based on role */
     public function index()
     {
-        return view('dashboard.home');
+        $role = session()->get('role_name');
+
+        if ($role === 'Admin' || $role === 'Super Admin') {
+            return view('dashboard.home');
+        } elseif ($role === 'Trainee') {
+            return redirect()->route('trainee/dashboard');
+        } elseif ($role === 'Supervisor') {
+            return redirect()->route('supervisor/dashboard');
+        }
+
+        abort(403, 'Unauthorized access');
     }
 
-    /** profile user */
     public function userProfile()
     {
         return view('dashboard.profile');
     }
 
-    /** teacher dashboard */
     public function teacherDashboardIndex()
     {
-        return view('dashboard.teacher_dashboard');
+        return view('dashboard.supervisor_dashboard');
     }
 
-    /** student dashboard */
     public function studentDashboardIndex()
     {
-        return view('dashboard.student_dashboard');
+        return view('dashboard.trainee_dashboard');
     }
 }

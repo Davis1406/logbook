@@ -75,8 +75,8 @@ Route::controller(RegisterController::class)->group(function () {
 Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->middleware('auth')->name('home');
     Route::get('user/profile/page', 'userProfile')->middleware('auth')->name('user/profile/page');
-    Route::get('teacher/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('teacher/dashboard');
-    Route::get('student/dashboard', 'studentDashboardIndex')->middleware('auth')->name('student/dashboard');
+    Route::get('supervisor/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('supervisor/dashboard');
+    Route::get('traineee/dashboard', 'studentDashboardIndex')->middleware('auth')->name('trainee/dashboard');
 });
 
 // ----------------------------- user controller -------------------------//
@@ -95,14 +95,14 @@ Route::controller(Setting::class)->group(function () {
     Route::get('setting/page', 'index')->middleware('auth')->name('setting/page');
 });
 
-// ------------------------ student -------------------------------//
+// ------------------------ trainees -------------------------------//
 Route::controller(TraineeController::class)->group(function () {
     Route::get('trainees/list', 'trainees')->middleware('auth')->name('trainees/list'); // list trainees
     Route::get('trainees/grid', 'traineestGrid')->middleware('auth')->name('trainees/grid'); // grid trainees
     Route::get('trainees/add/page', 'traineeAdd')->middleware('auth')->name('trainee/add'); // add trainee
     Route::post('trainees/add/save', 'traineeSave')->name('trainee/add/save'); // save record trainee
-    Route::get('trainees/edit/{id}', 'studentEdit'); // view for edit
-    Route::post('trainees/update', 'studentUpdate')->name('student/update'); // update record student
+    Route::get('trainees/edit-trainee/{id}', 'traineesEdit')->middleware('auth')->name('trainees.edit');
+    Route::post('trainees/update', 'traineeUpdate')->name('trainee/update'); // update record student
     Route::post('trainees/delete', 'studentDelete')->name('trainees.delete'); // delete record student
     Route::get('trainees/profile/{id}', 'studentProfile')->middleware('auth'); // profile student
 
@@ -110,11 +110,11 @@ Route::controller(TraineeController::class)->group(function () {
 
 // ------------------------ Supervisor -------------------------------//
 Route::controller(SupervisorController::class)->group(function () {
-    Route::get('supervisor/add/page', 'supervisorAdd')->middleware('auth')->name('supervisor/add'); // page supervisor
+    Route::get('supervisor/add/page', 'addSupervisor')->middleware('auth')->name('supervisor/add'); // page supervisor
     Route::get('supervisors/list', 'supervisorList')->middleware('auth')->name('supervisors/list'); // page supervisor
     Route::get('supervisor/grid/page', 'supervisorGrid')->middleware('auth')->name('supervisor/grid/page'); // page grid supervisor
     Route::post('supervisor/save', 'saveRecord')->middleware('auth')->name('supervisor/save'); // save record
-    Route::get('supervisor/edit/{id}', 'editRecord'); // view supervisor record
+    Route::get('supervisor/edit/{id}', 'editSupervisor'); // view supervisor record
     Route::post('supervisor/update', 'updateRecordSupervisor')->middleware('auth')->name('supervisor/update'); // update record
     Route::post('supervisor/delete', 'supervisorDelete')->name('supervisor/delete'); // delete record 
 });
@@ -167,7 +167,7 @@ Route::controller(OperationController::class)->group(function () {
     Route::get('operations/list', 'list')->middleware('auth')->name('operations/list');
     
     // Trainee: Add / Edit Own
-    Route::get('operations/add', 'index')->middleware('auth')->name('operations/add');
+    Route::get('operations/add', 'create')->middleware('auth')->name('operations/add');
     Route::post('operations/store', 'store')->middleware('auth')->name('operations/store');
     Route::get('operations/edit/{id}', 'edit')->middleware('auth')->name('operations/edit');
     Route::post('operations/update/{id}', 'update')->middleware('auth')->name('operations/update');
@@ -177,6 +177,6 @@ Route::controller(OperationController::class)->group(function () {
     Route::get('operations/reject/{id}', 'reject')->middleware('auth')->name('operations/reject');
 
     // Common: View & Delete
-    Route::get('operations/view/{id}', 'view')->middleware('auth')->name('operations/view');
+    Route::get('operation/view/{id}', 'view')->middleware('auth')->name('operation/view');
     Route::get('operations/delete/{id}', 'destroy')->middleware('auth')->name('operations/delete');
 });

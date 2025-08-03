@@ -33,14 +33,15 @@ class RotationController extends Controller
             return back()->with('error', 'Failed to create Rotation.');
         }
     }
+    
 
     /** Show edit form */
-public function edit($id)
-{
-    $rotation = Rotation::findOrFail($id);
-    $programmes = \App\Models\TrainingProgramme::all();
-    return view('rotations.edit-rotation', compact('rotation', 'programmes'));
-}
+    public function edit($id)
+    {
+        $rotation = Rotation::findOrFail($id);
+        $programmes = \App\Models\TrainingProgramme::all();
+        return view('rotations.edit-rotation', compact('rotation', 'programmes'));
+    }
 
 
     /** Update item */

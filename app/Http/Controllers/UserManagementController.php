@@ -8,6 +8,7 @@ use Auth;
 use Session;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Trainees;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
@@ -19,57 +20,64 @@ class UserManagementController extends Controller
 {
     public function index()
     {
-        $users = User::where('status', 'Active')->get();
+        $users = User::with('trainee')
+            ->join('user_roles', 'users.id', '=', 'user_roles.user_id')
+            ->where('user_roles.is_active', 1)
+            ->select('users.*')
+            ->get();
+
         return view('usermanagement.list_users', compact('users'));
     }
+
+
 
     public function createUser()
     {
         return view('usermanagement.add_user'); // adjust the view path as needed
     }
 
-public function storeUser(Request $request)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email',
-        'phone_number' => 'required|string|max:20',
-        'password' => 'required|string|min:6',
-        'status' => 'required|string',
-        'role_name' => 'required|string',
-        'avatar' => 'nullable|image',
-    ]);
+    public function storeUser(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone_number' => 'required|string|max:20',
+            'password' => 'required|string|min:6',
+            'status' => 'required|string',
+            'role_name' => 'required|string',
+            'avatar' => 'nullable|image',
+        ]);
 
-    $user = new User();
-    $user->name = $request->name;
-    $user->email = $request->email;
-    $user->phone_number = $request->phone_number;
-    $user->status = $request->status;
-    $user->role_name = $request->role_name;
-    $user->position = $request->position;
-    $user->department = $request->department;
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone_number = $request->phone_number;
+        $user->status = $request->status;
+        $user->role_name = $request->role_name;
+        $user->position = $request->position;
+        $user->department = $request->department;
 
-    // ✅ Set join_date automatically
-    $user->join_date = Carbon::now()->toDayDateTimeString();
+        // ✅ Set join_date automatically
+        $user->join_date = Carbon::now()->toDayDateTimeString();
 
-    $user->password = bcrypt($request->password);
+        $user->password = bcrypt($request->password);
 
-    if ($request->hasFile('avatar')) {
-        $file = $request->file('avatar');
-        $filename = time() . '.' . $file->getClientOriginalExtension();
-        $file->move(public_path('images'), $filename);
-        $user->avatar = $filename;
+        if ($request->hasFile('avatar')) {
+            $file = $request->file('avatar');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('images'), $filename);
+            $user->avatar = $filename;
+        }
+
+        $user->save();
+
+        \App\Models\UserRole::create([
+            'user_id' => $user->id,
+            'role_id' => 1,
+        ]);
+
+        return redirect()->route('list/users')->with('success', 'User added successfully.');
     }
-
-    $user->save();
-
-    \App\Models\UserRole::create([
-        'user_id' => $user->id,
-        'role_id' => 1,
-    ]);
-
-    return redirect()->route('list/users')->with('success', 'User added successfully.');
-}
 
 
     /** user view */

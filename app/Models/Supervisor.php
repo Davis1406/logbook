@@ -8,20 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class Supervisor extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'supervisor_id',
-        'full_name',
+        'name',
         'gender',
-        'date_of_birth',
-        'mobile',
-        'joining_date',
-        'qualification',
-        'experience',
-        'username',
-        'address',
-        'city',
-        'state',
-        'zip_code',
         'country',
+        'mobile',
+        'programme_id',
+        'hospital_id',
+        'avatar',
     ];
+
+    // Optional: Define relationships if needed
+    public function programme()
+    {
+        return $this->belongsTo(TrainingProgramme::class, 'programme_id');
+    }
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospitals::class, 'hospital_id');
+    }
 }

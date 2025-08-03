@@ -67,6 +67,7 @@
                                         <th>Phone</th>
                                         <th>Study Year</th>
                                         <th>Programme</th>
+                                        <th>Hospital</th>
                                         <th class="text-end">Action</th>
                                     </tr>
                                 </thead>
@@ -77,18 +78,19 @@
                                         <td hidden class="id">{{ $trainee->id }}</td>
                                         <td hidden class="avatar">{{ $trainee->upload }}</td>
                                         <td>
-                                            <img src="{{ Storage::url('student-photos/'.$trainee->upload) }}" class="avatar-img rounded-circle" width="40" height="40" alt="Photo">
+                                            <img src="{{ Storage::url('app/public/'.$trainee->upload) }}" class="avatar-img rounded-circle" width="40" height="40" alt="Photo">
                                         </td>
                                         <td>{{ $trainee->first_name }} {{ $trainee->last_name }}</td>
                                         <td>{{ $trainee->gender }}</td>
                                         <td>{{ $trainee->country }}</td>
                                         <td>{{ $trainee->email }}</td>
                                         <td>{{ $trainee->phone_number }}</td>
-                                        <td>{{ $trainee->study_year }}</td>
+                                        <td>Year {{ $trainee->study_year }}</td>
                                         <td>{{ optional($trainee->programme)->programme_name ?? 'N/A' }}</td>
+                                        <td>{{ optional($trainee->hospital)->hospital_name ?? 'N/A' }}</td>
                                         <td class="text-end">
                                             <div class="actions">
-                                                <a href="{{ url('trainee/edit/'.$trainee->id) }}" class="btn btn-sm bg-success-light me-1">
+                                                <a href="{{ url('trainees/edit-trainee/'.$trainee->id) }}" class="btn btn-sm bg-success-light me-1">
                                                     <i class="feather-edit"></i>
                                                 </a>
                                                 <a class="btn btn-sm bg-danger-light trainee_delete" data-bs-toggle="modal" data-bs-target="#traineeDeleteModal">

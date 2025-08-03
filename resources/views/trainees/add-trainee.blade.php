@@ -3,17 +3,24 @@
     <div class="page-wrapper">
         <div class="content container-fluid">
 
+            {{-- Page Header --}}
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
                             <h3 class="page-title">Add Trainee</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{{ route('trainees/list') }}">Trainees</a></li>
+                                <li class="breadcrumb-item active">Add Trainee</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- message --}}
+
+            {{-- Flash Message --}}
             {!! Toastr::message() !!}
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card comman-shadow">
@@ -21,270 +28,322 @@
                             <form action="{{ route('trainee/add/save') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
+                                    {{-- Personal Info --}}
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Trainee Information
-                                            <span>
-                                                <a href="javascript:;"><i class="feather-more-vertical"></i></a>
-                                            </span>
-                                        </h5>
+                                        <h5 class="form-title student-info">Personal Information</h5>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>First Name <span class="login-danger">*</span></label>
-                                            <input type="text"
+                                            <input type="text" name="first_name"
                                                 class="form-control @error('first_name') is-invalid @enderror"
-                                                name="first_name" placeholder="Enter First Name"
-                                                value="{{ old('first_name') }}">
+                                                value="{{ old('first_name') }}" placeholder="Enter First Name">
                                             @error('first_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Last Name <span class="login-danger">*</span></label>
-                                            <input type="text"
+                                            <input type="text" name="last_name"
                                                 class="form-control @error('last_name') is-invalid @enderror"
-                                                name="last_name" placeholder="Enter Last Name"
-                                                value="{{ old('last_name') }}">
+                                                value="{{ old('last_name') }}" placeholder="Enter Last Name">
                                             @error('last_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Gender <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('gender') is-invalid @enderror"
+                                            <select class="form-control select @error('gender') is-invalid @enderror"
                                                 name="gender">
                                                 <option selected disabled>Select Gender</option>
-                                                <option value="Female"
-                                                    {{ old('gender') == 'Female' ? 'selected' : 'Female' }}>Female</option>
                                                 <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male
                                                 </option>
-                                                <option value="Others" {{ old('gender') == 'Others' ? 'selected' : '' }}>
-                                                    Others</option>
+                                                <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>
+                                                    Female</option>
                                             </select>
                                             @error('gender')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms calendar-icon">
-                                            <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input
-                                                class="form-control datetimepicker @error('date_of_birth') is-invalid @enderror"
-                                                name="date_of_birth" type="text" placeholder="DD-MM-YYYY"
-                                                value="{{ old('date_of_birth') }}">
-                                            @error('date_of_birth')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Roll </label>
-                                            <input class="form-control @error('roll') is-invalid @enderror" type="text"
-                                                name="roll" placeholder="Enter Roll Number" value="{{ old('roll') }}">
-                                            @error('roll')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                            <label>Country <span class="login-danger">*</span></label>
+                                            <input type="text" name="country"
+                                                class="form-control @error('country') is-invalid @enderror"
+                                                value="{{ old('country') }}" placeholder="Enter Country">
+                                            @error('country')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Blood Group <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('blood_group') is-invalid @enderror"
-                                                name="blood_group">
-                                                <option selected disabled>Please Select Group </option>
-                                                <option value="A+" {{ old('blood_group') == 'A+' ? 'selected' : '' }}>A+
-                                                </option>
-                                                <option value="B+" {{ old('blood_group') == 'B+' ? 'selected' : '' }}>B+
-                                                </option>
-                                                <option value="O+" {{ old('blood_group') == 'O+' ? 'selected' : '' }}>O+
-                                                </option>
-                                            </select>
-                                            @error('blood_group')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Religion <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('religion') is-invalid @enderror"
-                                                name="religion">
-                                                <option selected disabled>Please Select Religion </option>
-                                                <option value="Hindu" {{ old('religion') == 'Hindu' ? 'selected' : '' }}>
-                                                    Hindu</option>
-                                                <option value="Christian"
-                                                    {{ old('religion') == 'Christian' ? 'selected' : '' }}>Christian
-                                                </option>
-                                                <option value="Others" {{ old('religion') == 'Others' ? 'selected' : '' }}>
-                                                    Others</option>
-                                            </select>
-                                            @error('religion')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>E-Mail <span class="login-danger">*</span></label>
-                                            <input class="form-control @error('email') is-invalid @enderror" type="text"
-                                                name="email" placeholder="Enter Email Address"
-                                                value="{{ old('email') }}">
+                                            <label>Email <span class="login-danger">*</span></label>
+                                            <input type="email" name="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                value="{{ old('email') }}" placeholder="Enter Email">
                                             @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Class <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('class') is-invalid @enderror"
-                                                name="class">
-                                                <option selected disabled>Please Select Class </option>
-                                                <option value="12" {{ old('class') == '12' ? 'selected' : '' }}>12
-                                                </option>
-                                                <option value="11" {{ old('class') == '11' ? 'selected' : '' }}>11
-                                                </option>
-                                                <option value="10" {{ old('class') == '10' ? 'selected' : '' }}>10
-                                                </option>
-                                            </select>
-                                            @error('class')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Section <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('section') is-invalid @enderror"
-                                                name="section">
-                                                <option selected disabled>Please Select Section </option>
-                                                <option value="A" {{ old('section') == 'A' ? 'selected' : '' }}>A
-                                                </option>
-                                                <option value="B" {{ old('section') == 'B' ? 'selected' : '' }}>B
-                                                </option>
-                                                <option value="C" {{ old('section') == 'C' ? 'selected' : '' }}>C
-                                                </option>
-                                            </select>
-                                            @error('section')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Admission ID </label>
-                                            <input class="form-control @error('admission_id') is-invalid @enderror"
-                                                type="text" name="admission_id" placeholder="Enter Admission ID"
-                                                value="{{ old('admission_id') }}">
-                                            @error('admission_id')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Phone </label>
-                                            <input class="form-control @error('phone_number') is-invalid @enderror"
-                                                type="text"
-                                                oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');"
-                                                name="phone_number" placeholder="Enter Phone Number"
-                                                value="{{ old('phone_number') }}">
+                                            <label>Phone Number <span class="login-danger">*</span></label>
+                                            <input type="text" name="phone_number"
+                                                class="form-control @error('phone_number') is-invalid @enderror"
+                                                value="{{ old('phone_number') }}" placeholder="Enter Phone Number">
                                             @error('phone_number')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Study Year <span class="login-danger">*</span></label>
+                                            <input type="number" name="study_year"
+                                                class="form-control @error('study_year') is-invalid @enderror"
+                                                placeholder="e.g. 1, 2, 3" value="{{ old('study_year') }}">
+                                            @error('study_year')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Programme <span class="login-danger">*</span></label>
+                                            <select class="form-control select @error('programme_id') is-invalid @enderror"
+                                                name="programme_id">
+                                                <option selected disabled>Select Programme</option>
+                                                @foreach ($programmes as $programme)
+                                                    <option value="{{ $programme->id }}"
+                                                        {{ old('programme_id') == $programme->id ? 'selected' : '' }}>
+                                                        {{ $programme->programme_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('programme_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    {{-- NEW: Hospital Dropdown --}}
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Hospital <span class="login-danger">*</span></label>
+                                            <select class="form-control select @error('hospital_id') is-invalid @enderror"
+                                                name="hospital_id">
+                                                <option selected disabled>Select Hospital</option>
+                                                @foreach ($hospitals as $hospital)
+                                                    <option value="{{ $hospital->id }}"
+                                                        {{ old('hospital_id') == $hospital->id ? 'selected' : '' }}>
+                                                        {{ $hospital->hospital_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('hospital_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Admission ID <span class="login-danger">*</span></label>
+                                            <input type="text" name="admission_id"
+                                                class="form-control @error('admission_id') is-invalid @enderror"
+                                                value="{{ old('admission_id') }}" placeholder="Enter Admission ID">
+                                            @error('admission_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group students-up-files">
-                                            <label>Upload Student Photo (150px X 150px)</label>
+                                            <label>Upload Trainee Photo</label>
                                             <div class="uplod">
                                                 <label
-                                                    class="file-upload image-upbtn mb-0 @error('upload') is-invalid @enderror">
-                                                    Choose File <input type="file" name="upload">
+                                                    class="file-upload image-upbtn mb-0 @error('upload') is-invalid @enderror"
+                                                    for="traineePhoto">
+                                                    <span id="uploadText">Choose File</span>
+                                                    <input type="file" name="upload" id="traineePhoto"
+                                                        accept="image/*" style="display: none;"
+                                                        onchange="handleFileUpload(this)">
                                                 </label>
                                                 @error('upload')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                                 @enderror
+                                            </div>
+
+                                            <!-- File information display -->
+                                            <div id="fileInfoContainer" class="mt-3" style="display: none;">
+                                                <div class="card border-light">
+                                                    <div class="card-body p-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="file-icon me-2">
+                                                                <i class="fas fa-image text-primary"></i>
+                                                            </div>
+                                                            <div class="file-details flex-grow-1">
+                                                                <div class="file-name font-weight-bold"
+                                                                    id="selectedFileName"></div>
+                                                                <div class="file-size text-muted small"
+                                                                    id="selectedFileSize"></div>
+                                                            </div>
+                                                            <div class="file-actions">
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-danger"
+                                                                    onclick="removeFile()">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Image preview -->
+                                            <div id="imagePreviewContainer" class="mt-2" style="display: none;">
+                                                <div class="text-center">
+                                                    <img id="imagePreview" src="" alt="Preview"
+                                                        class="img-thumbnail"
+                                                        style="max-width: 120px; max-height: 120px;">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+
+                                    {{-- Login Info --}}
                                     <div class="col-12">
-                                        <h5 class="form-title"><span>Login Details</span></h5>
+                                        <h5 class="form-title mt-4"><span>Login Credentials</span></h5>
                                     </div>
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Password <span class="login-danger">*</span></label>
-                                            <input type="password"
+                                            <input type="password" name="password"
                                                 class="form-control @error('password') is-invalid @enderror"
-                                                name="password" placeholder="Enter Password"
-                                                value="{{ old('password') }}">
+                                                placeholder="Enter Password">
                                             @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Repeat Password <span class="login-danger">*</span></label>
-                                            <input type="password"
+                                            <label>Confirm Password <span class="login-danger">*</span></label>
+                                            <input type="password" name="password_confirmation"
                                                 class="form-control @error('password_confirmation') is-invalid @enderror"
-                                                name="password_confirmation" placeholder="Repeat Password"
-                                                value="{{ old('password_confirmation') }}">
+                                                placeholder="Repeat Password">
                                             @error('password_confirmation')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="student-submit">
-                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                            <button type="submit" class="btn btn-primary w-100">Save Trainee</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> <!-- /.row -->
                             </form>
-                        </div>
-                    </div>
+                        </div> <!-- /.card-body -->
+                    </div> <!-- /.card -->
                 </div>
             </div>
         </div>
     </div>
+@endsection
+
+@push('scripts')
+    <script>
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            const fileInfoContainer = document.getElementById('fileInfoContainer');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const selectedFileName = document.getElementById('selectedFileName');
+            const selectedFileSize = document.getElementById('selectedFileSize');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadText = document.getElementById('uploadText');
+
+            if (file) {
+                // Display file information
+                selectedFileName.textContent = file.name;
+                selectedFileSize.textContent = (file.size / 1024).toFixed(2) + ' KB';
+                fileInfoContainer.style.display = 'block';
+
+                // Show the image preview if the file is an image
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreviewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreviewContainer.style.display = 'none';
+                }
+
+                // Update the upload button text
+                uploadText.textContent = 'Change File';
+            } else {
+                fileInfoContainer.style.display = 'none';
+                imagePreviewContainer.style.display = 'none';
+                uploadText.textContent = 'Choose File';
+            }
+        }
+
+        function removeFile() {
+            const traineePhotoInput = document.getElementById('traineePhoto');
+            traineePhotoInput.value = '';
+            handleFileUpload(traineePhotoInput);
+        }
+    </script>
+@endpush
+
+@section('styles')
+    <style>
+        .file-upload {
+            transition: all 0.3s ease;
+        }
+
+        .file-upload:hover {
+            background-color: #f8f9fa;
+            border-color: #007bff;
+        }
+
+        .card.border-light {
+            border: 1px solid #e9ecef !important;
+        }
+
+        .file-icon i {
+            font-size: 1.2rem;
+        }
+
+        .file-name {
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .file-size {
+            font-size: 0.8rem;
+        }
+    </style>
 @endsection

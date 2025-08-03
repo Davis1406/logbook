@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hospitals extends Model
 {
-     use HasFactory;
+    use HasFactory;
 
     // Specify fillable fields for mass assignment
     protected $fillable = [
@@ -23,6 +23,9 @@ class Hospitals extends Model
 
     // Optional: If you want Laravel to manage timestamps automatically
     public $timestamps = true;
+
+    public function hospital()
+    {
+        return $this->belongsTo(Hospitals::class, 'hospital_id');
+    }
 }
-
-

@@ -1,228 +1,292 @@
-
 @extends('layouts.master')
 @section('content')
     <div class="page-wrapper">
         <div class="content container-fluid">
 
+            {{-- Page Header --}}
             <div class="page-header">
                 <div class="row align-items-center">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Edit Students</h3>
+                            <h3 class="page-title">Edit Trainee</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ route('student/add/page') }}">Student</a></li>
-                                <li class="breadcrumb-item active">Edit Students</li>
+                                <li class="breadcrumb-item"><a href="{{ route('trainees/list') }}">Trainees</a></li>
+                                <li class="breadcrumb-item active">Edit Trainee</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-            {{-- message --}}
+
+            {{-- Flash Message --}}
             {!! Toastr::message() !!}
+
             <div class="row">
                 <div class="col-sm-12">
                     <div class="card comman-shadow">
                         <div class="card-body">
-                            <form action="{{ route('student/update') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('trainee/update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <input type="hidden" class="form-control" name="id" value="{{ $studentEdit->id }}" readonly>
+                                <input type="hidden" name="id" value="{{ $trainee->id }}">
+                                <input type="hidden" name="image_hidden" value="{{ $trainee->upload }}">
                                 <div class="row">
                                     <div class="col-12">
-                                        <h5 class="form-title student-info">Student Information
-                                            <span>
-                                                <a href="javascript:;"><i class="feather-more-vertical"></i></a>
-                                            </span>
-                                        </h5>
+                                        <h5 class="form-title student-info">Personal Information</h5>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>First Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ $studentEdit->first_name }}">
+                                            <input type="text" name="first_name"
+                                                class="form-control @error('first_name') is-invalid @enderror"
+                                                value="{{ old('first_name', $trainee->first_name) }}">
                                             @error('first_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Last Name <span class="login-danger">*</span></label>
-                                            <input type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ $studentEdit->last_name }}">
+                                            <input type="text" name="last_name"
+                                                class="form-control @error('last_name') is-invalid @enderror"
+                                                value="{{ old('last_name', $trainee->last_name) }}">
                                             @error('last_name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
                                             <label>Gender <span class="login-danger">*</span></label>
-                                            <select class="form-control select  @error('gender') is-invalid @enderror" name="gender">
+                                            <select name="gender"
+                                                class="form-control select @error('gender') is-invalid @enderror">
                                                 <option selected disabled>Select Gender</option>
-                                                <option value="Female" {{ $studentEdit->gender == 'Female' ? "selected" :"Female"}}>Female</option>
-                                                <option value="Male" {{ $studentEdit->gender == 'Male' ? "selected" :""}}>Male</option>
-                                                <option value="Others" {{ $studentEdit->gender == 'Others' ? "selected" :""}}>Others</option>
+                                                <option value="Male" {{ $trainee->gender == 'Male' ? 'selected' : '' }}>
+                                                    Male</option>
+                                                <option value="Female" {{ $trainee->gender == 'Female' ? 'selected' : '' }}>
+                                                    Female</option>
+                                                <option value="Others"
+                                                    {{ $trainee->gender == 'Others' ? 'selected' : '' }}>Others</option>
                                             </select>
                                             @error('gender')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms calendar-icon">
-                                            <label>Date Of Birth <span class="login-danger">*</span></label>
-                                            <input class="form-control @error('date_of_birth') is-invalid @enderror" name="date_of_birth" type="text"  value="{{ $studentEdit->date_of_birth }}">
-                                            @error('date_of_birth')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Roll </label>
-                                            <input class="form-control @error('roll') is-invalid @enderror" type="text" name="roll" value="{{ $studentEdit->roll }}">
-                                            @error('roll')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                            <label>Country <span class="login-danger">*</span></label>
+                                            <input type="text" name="country"
+                                                class="form-control @error('country') is-invalid @enderror"
+                                                value="{{ old('country', $trainee->country) }}">
+                                            @error('country')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Blood Group <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('blood_group') is-invalid @enderror" name="blood_group">
-                                                <option selected disabled>Please Select Group </option>
-                                                <option value="A+" {{ $studentEdit->blood_group == 'A+' ? "selected" :""}}>A+</option>
-                                                <option value="B+" {{ $studentEdit->blood_group == 'B+' ? "selected" :""}}>B+</option>
-                                                <option value="O+" {{ $studentEdit->blood_group == 'O+' ? "selected" :""}}>O+</option>
-                                            </select>
-                                            @error('blood_group')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Religion <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('religion') is-invalid @enderror" name="religion">
-                                                <option selected disabled>Please Select Religion </option>
-                                                <option value="Hindu" {{ $studentEdit->religion == 'Hindu' ? "selected" :""}}>Hindu</option>
-                                                <option value="Christian" {{ $studentEdit->religion == 'Christian' ? "selected" :""}}>Christian</option>
-                                                <option value="Others" {{ $studentEdit->religion == 'Others' ? "selected" :""}}>Others</option>
-                                            </select>
-                                            @error('religion')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>E-Mail <span class="login-danger">*</span></label>
-                                            <input class="form-control @error('email') is-invalid @enderror" type="text" name="email"  value="{{ $studentEdit->email }}">
+                                            <label>Email <span class="login-danger">*</span></label>
+                                            <input type="email" name="email"
+                                                class="form-control @error('email') is-invalid @enderror"
+                                                value="{{ old('email', $trainee->email) }}">
                                             @error('email')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group local-forms">
-                                            <label>Class <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('class') is-invalid @enderror" name="class">
-                                                <option selected disabled>Please Select Class </option>
-                                                <option value="12" {{ $studentEdit->class == '12' ? "selected" :""}}>12</option>
-                                                <option value="11" {{ $studentEdit->class == '11' ? "selected" :""}}>11</option>
-                                                <option value="10" {{ $studentEdit->class == '10' ? "selected" :""}}>10</option>
-                                            </select>
-                                            @error('class')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Section <span class="login-danger">*</span></label>
-                                            <select class="form-control select @error('section') is-invalid @enderror" name="section">
-                                                <option selected disabled>Please Select Section </option>
-                                                <option value="A" {{ $studentEdit->section == 'A' ? "selected" :""}}>A</option>
-                                                <option value="B" {{ $studentEdit->section == 'B' ? "selected" :""}}>B</option>
-                                                <option value="C" {{ $studentEdit->section == 'C' ? "selected" :""}}>C</option>
-                                            </select>
-                                            @error('section')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Admission ID </label>
-                                            <input class="form-control @error('admission_id') is-invalid @enderror" type="text" name="admission_id" value="{{ $studentEdit->admission_id }}">
-                                            @error('admission_id')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
-                                        <div class="form-group local-forms">
-                                            <label>Phone </label>
-                                            <input class="form-control @error('phone_number') is-invalid @enderror" type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" name="phone_number" value="{{ $studentEdit->phone_number }}">
+                                            <label>Phone Number <span class="login-danger">*</span></label>
+                                            <input type="text" name="phone_number"
+                                                class="form-control @error('phone_number') is-invalid @enderror"
+                                                value="{{ old('phone_number', $trainee->phone_number) }}">
                                             @error('phone_number')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                             @enderror
                                         </div>
                                     </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Study Year <span class="login-danger">*</span></label>
+                                            <input type="number" name="study_year"
+                                                class="form-control @error('study_year') is-invalid @enderror"
+                                                value="{{ old('study_year', $trainee->study_year) }}">
+                                            @error('study_year')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Programme <span class="login-danger">*</span></label>
+                                            <select name="programme_id"
+                                                class="form-control select @error('programme_id') is-invalid @enderror">
+                                                <option selected disabled>Select Programme</option>
+                                                @foreach ($programmes as $programme)
+                                                    <option value="{{ $programme->id }}"
+                                                        {{ $trainee->programme_id == $programme->id ? 'selected' : '' }}>
+                                                        {{ $programme->programme_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('programme_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Hospital <span class="login-danger">*</span></label>
+                                            <select name="hospital_id"
+                                                class="form-control select @error('hospital_id') is-invalid @enderror">
+                                                <option selected disabled>Select Hospital</option>
+                                                @foreach ($hospitals as $hospital)
+                                                    <option value="{{ $hospital->id }}"
+                                                        {{ $trainee->hospital_id == $hospital->id ? 'selected' : '' }}>
+                                                        {{ $hospital->hospital_name }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                            @error('hospital_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-4">
+                                        <div class="form-group local-forms">
+                                            <label>Admission ID <span class="login-danger">*</span></label>
+                                            <input type="text" name="admission_id"
+                                                class="form-control @error('admission_id') is-invalid @enderror"
+                                                value="{{ old('admission_id', $trainee->admission_id) }}">
+                                            @error('admission_id')
+                                                <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    {{-- Upload --}}
                                     <div class="col-12 col-sm-4">
                                         <div class="form-group students-up-files">
-                                            <label>Upload Student Photo (150px X 150px)</label>
+                                            <label>Upload Trainee Photo</label>
                                             <div class="uplod">
-                                                <h2 class="table-avatar">
-                                                    <a class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle" src="{{ Storage::url('student-photos/'.$studentEdit->upload) }}" alt="User Image">
-                                                    </a>
-                                                </h2>
-                                                <label class="file-upload image-upbtn mb-0 @error('upload') is-invalid @enderror">
-                                                    Choose File <input type="file" name="upload">
+                                                <label
+                                                    class="file-upload image-upbtn mb-0 @error('upload') is-invalid @enderror"
+                                                    for="traineePhotoEdit">
+                                                    <span id="uploadText">Choose File</span>
+                                                    <input type="file" name="upload" id="traineePhotoEdit"
+                                                        accept="image/*" style="display: none;"
+                                                        onchange="handleFileUpload(this)">
                                                 </label>
-                                                <input type="hidden" name="image_hidden" value="{{ $studentEdit->upload }}">
                                                 @error('upload')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
+                                                    <span class="invalid-feedback"><strong>{{ $message }}</strong></span>
                                                 @enderror
+                                            </div>
+
+                                            @if ($trainee->upload)
+                                                <div class="mt-3">
+                                                    <img src="{{ Storage::url('app/public/'.$trainee->upload) }}" class="img-thumbnail"
+                                                        style="max-width: 120px;">
+                                                </div>
+                                            @endif
+
+
+                                            {{-- JS preview --}}
+                                            <div id="fileInfoContainer" class="mt-3" style="display: none;">
+                                                <div class="card border-light">
+                                                    <div class="card-body p-2">
+                                                        <div class="d-flex align-items-center">
+                                                            <div class="file-icon me-2">
+                                                                <i class="fas fa-image text-primary"></i>
+                                                            </div>
+                                                            <div class="file-details flex-grow-1">
+                                                                <div class="file-name" id="selectedFileName"></div>
+                                                                <div class="file-size text-muted small"
+                                                                    id="selectedFileSize"></div>
+                                                            </div>
+                                                            <div class="file-actions">
+                                                                <button type="button"
+                                                                    class="btn btn-sm btn-outline-danger"
+                                                                    onclick="removeFile()">
+                                                                    <i class="fas fa-times"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div id="imagePreviewContainer" class="mt-2" style="display: none;">
+                                                <img id="imagePreview" src="" alt="Preview"
+                                                    class="img-thumbnail" style="max-width: 120px;">
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-12">
                                         <div class="student-submit">
-                                            <button type="submit" class="btn btn-primary">Update</button>
+                                            <button type="submit" class="btn btn-primary w-100">Update Trainee</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> <!-- /.row -->
                             </form>
-                        </div>
-                    </div>
+                        </div> <!-- /.card-body -->
+                    </div> <!-- /.card -->
                 </div>
             </div>
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script>
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            const fileInfoContainer = document.getElementById('fileInfoContainer');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const selectedFileName = document.getElementById('selectedFileName');
+            const selectedFileSize = document.getElementById('selectedFileSize');
+            const imagePreview = document.getElementById('imagePreview');
+            const uploadText = document.getElementById('uploadText');
+
+            if (file) {
+                selectedFileName.textContent = file.name;
+                selectedFileSize.textContent = (file.size / 1024).toFixed(2) + ' KB';
+                fileInfoContainer.style.display = 'block';
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        imagePreview.src = e.target.result;
+                        imagePreviewContainer.style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    imagePreviewContainer.style.display = 'none';
+                }
+
+                uploadText.textContent = 'Change File';
+            } else {
+                fileInfoContainer.style.display = 'none';
+                imagePreviewContainer.style.display = 'none';
+                uploadText.textContent = 'Choose File';
+            }
+        }
+
+        function removeFile() {
+            const fileInput = document.getElementById('traineePhotoEdit');
+            fileInput.value = '';
+            handleFileUpload(fileInput);
+        }
+    </script>
+@endpush

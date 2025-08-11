@@ -20,6 +20,7 @@ class Operation extends Model
         'duration',
         'participation_type',
         'procedure_notes',
+        'supervisor_remarks',
         'status',
     ];
 

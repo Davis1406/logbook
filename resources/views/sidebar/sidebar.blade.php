@@ -87,11 +87,11 @@
                 {{-- OPERATIONS (Visible to all roles, restricted in controller) --}}
                 @if (in_array(Session::get('role_name'), ['Admin', 'Super Admin', 'Supervisor', 'Trainee']))
                     <li class="submenu {{ set_active(['operations/list','operations/add','operation/view/*']) }}">
-                        <a href="#"><i class="fas fa-tasks"></i><span> Trainee Operations</span><span
+                        <a href="#"><i class="fas fa-tasks"></i><span> Trainee Activities</span><span
                                 class="menu-arrow"></span></a>
                         <ul>
                             <li><a href="{{ route('operations/list') }}"
-                                    class="{{ set_active(['operations/list','operations/add','operation/view/*' ]) }}">Operations</a></li>
+                                    class="{{ set_active(['operations/list','operations/add','operation/view/*' ]) }}">Activities</a></li>
                         </ul>
                     </li>
                 @endif

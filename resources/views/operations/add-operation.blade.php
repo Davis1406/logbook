@@ -8,11 +8,11 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Log Procedure</h3>
+                            <h3 class="page-title">Log Activity</h3>
                             <ul class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="#">Operations</a></li>
-                                <li class="breadcrumb-item active">Add Operation</li>
+                                <li class="breadcrumb-item"><a href="#">Activities</a></li>
+                                <li class="breadcrumb-item active">Add Activity</li>
                             </ul>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Rotation <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="rotation_id"
+                                                    <select name="rotation_id" id="rotation_id"
                                                         class="form-control select @error('rotation_id') is-invalid @enderror"
                                                         required>
                                                         <option value="">Select Rotation</option>
@@ -76,19 +76,11 @@
                                                 <div class="form-group">
                                                     <label class="form-label">Objective <span
                                                             class="text-danger">*</span></label>
-                                                    <select name="objective_id"
+                                                    <select name="objective_id" id="objective_id"
                                                         class="form-control select @error('objective_id') is-invalid @enderror"
                                                         required>
                                                         <option value="">Select Objective</option>
-                                                        @foreach ($objectives as $objective)
-                                                            <option value="{{ $objective->id }}"
-                                                                {{ old('objective_id') == $objective->id ? 'selected' : '' }}>
-                                                                {{ $objective->objective_code }} -
-                                                                {{ $objective->description }}
-                                                            </option>
-                                                        @endforeach
                                                     </select>
-
                                                     @error('objective_id')
                                                         <div class="invalid-feedback">{{ $message }}</div>
                                                     @enderror
@@ -98,19 +90,19 @@
                                     </div>
                                 </div>
 
-                                <!-- Step 2: Procedure Details -->
+                                <!-- Step 2: Activity Details -->
                                 <div class="step-content" data-step="2">
                                     <div class="form-section">
                                         <div class="d-flex align-items-center mb-3">
                                             <i class="fas fa-stethoscope me-2 text-primary"></i>
-                                            <h4 class="mb-0">Procedure Details</h4>
+                                            <h4 class="mb-0">Activity Details</h4>
                                         </div>
-                                        <p class="text-muted mb-4">Provide specific details about the procedure</p>
+                                        <p class="text-muted mb-4">Provide specific details about the activity</p>
 
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">Procedure Date <span
+                                                    <label class="form-label">Activity Date <span
                                                             class="text-danger">*</span></label>
                                                     <input type="date" name="procedure_date"
                                                         class="form-control @error('procedure_date') is-invalid @enderror"
@@ -122,7 +114,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="form-label">Procedure Time <span
+                                                    <label class="form-label">Activity Time <span
                                                             class="text-danger">*</span></label>
                                                     <input type="time" name="procedure_time"
                                                         class="form-control @error('procedure_time') is-invalid @enderror"
@@ -174,12 +166,12 @@
                                                     @enderror
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label">Supervisor</label>
                                                     <select name="supervisor_id" id="supervisor_id"
-                                                        class="form-control select">
+                                                        class="form-control select" required>
                                                         <option value="">Select Supervisor</option>
                                                         @foreach ($supervisors as $supervisor)
                                                             <option value="{{ $supervisor->supervisor_id }}"
@@ -187,20 +179,10 @@
                                                                 {{ $supervisor->name }}
                                                             </option>
                                                         @endforeach
-                                                        <option value="other"
-                                                            {{ old('supervisor_id') == 'other' ? 'selected' : '' }}>Other
-                                                        </option>
                                                     </select>
-                                                    <small class="form-text text-muted">If your supervisor is not listed,
-                                                        choose "Other" and type the name.</small>
-                                                </div>
-
-                                                <div class="form-group mt-2" id="supervisor_name_group"
-                                                    style="display: none;">
-                                                    <label class="form-label">Supervisor Name</label>
-                                                    <input type="text" name="supervisor_name" class="form-control"
-                                                        placeholder="Enter supervisor's name"
-                                                        value="{{ old('supervisor_name') }}">
+                                                    <small class="form-text text-muted">
+                                                        Please select your assigned supervisor from the list.
+                                                    </small>
                                                 </div>
                                             </div>
 
@@ -214,18 +196,18 @@
                                     <div class="form-section">
                                         <div class="d-flex align-items-center mb-3">
                                             <i class="fas fa-file-medical me-2 text-primary"></i>
-                                            <h4 class="mb-0">Procedure Notes</h4>
+                                            <h4 class="mb-0">Activity Notes</h4>
                                         </div>
                                         <p class="text-muted mb-4">Add any additional notes or observations about the
                                             procedure</p>
 
                                         <div class="form-group mb-4">
-                                            <label class="form-label">Procedure Notes</label>
+                                            <label class="form-label">Activity Notes</label>
                                             <textarea name="procedure_notes" class="form-control @error('procedure_notes') is-invalid @enderror" rows="6"
                                                 placeholder="Enter notes here...">{{ old('procedure_notes') }}</textarea>
                                             <small class="form-text text-muted">Include any relevant observations, learning
                                                 points, complications, or other important details about the
-                                                procedure.</small>
+                                                activity.</small>
                                             @error('procedure_notes')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -236,7 +218,7 @@
                                             <div class="card-header bg-light">
                                                 <h5 class="card-title mb-0">
                                                     <i class="fas fa-clipboard-list me-2"></i>
-                                                    Operation Summary
+                                                    Activity Summary
                                                 </h5>
                                             </div>
                                             <div class="card-body">
@@ -548,6 +530,32 @@
         if ($('#supervisor_id').val() === 'other') {
             $('#supervisor_name_group').show();
         }
+
+        $('#rotation_id').on('change', function() {
+            const rotationId = $(this).val();
+            $('#objective_id').html('<option value="">Loading...</option>');
+
+            if (rotationId) {
+                $.ajax({
+                    url: `/objectives/by-rotation/${rotationId}`,
+                    method: 'GET',
+                    success: function(data) {
+                        let options = '<option value="">Select Objective</option>';
+                        data.forEach(function(obj) {
+                            options +=
+                                `<option value="${obj.id}">${obj.objective_code} - ${obj.description}</option>`;
+                        });
+                        $('#objective_id').html(options);
+                    },
+                    error: function() {
+                        $('#objective_id').html('<option value="">Error loading objectives</option>');
+                    }
+                });
+            } else {
+                $('#objective_id').html('<option value="">Select Objective</option>');
+            }
+        });
+
 
 
         function updateSummary() {

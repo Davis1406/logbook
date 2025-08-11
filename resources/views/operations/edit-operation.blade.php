@@ -12,7 +12,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="page-sub-header">
-                            <h3 class="page-title">Edit Operation</h3>
+                            <h3 class="page-title">Edit Activity</h3>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">Rotation <span class="text-danger">*</span></label>
-                                                    <select name="rotation_id"
+                                                    <select name="rotation_id" id="rotation_id"
                                                         class="form-control select @error('rotation_id') is-invalid @enderror"
                                                         required>
                                                         <option value="">Select Rotation</option>
@@ -72,7 +72,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="form-label">Objective <span class="text-danger">*</span></label>
-                                                    <select name="objective_id"
+                                                    <select name="objective_id" id="objective_id"
                                                         class="form-control select @error('objective_id') is-invalid @enderror"
                                                         required>
                                                         <option value="">Select Objective</option>
@@ -164,32 +164,38 @@
                                                     @enderror
                                                 </div>
                                             </div>
+                                        </div>
 
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label class="form-label">Supervisor</label>
-                                                    <select name="supervisor_id" id="supervisor_id" class="form-control select">
+                                                    <select name="supervisor_id" id="supervisor_id" class="form-control select" required>
                                                         <option value="">Select Supervisor</option>
                                                         @foreach ($supervisors as $supervisor)
+                                                            @php
+                                                                // Check if this supervisor matches the current operation's supervisor
+                                                                $isSelected = false;
+                                                                if ($operation->supervisor_id) {
+                                                                    // If operation has supervisor_id, match against supervisor.id
+                                                                    $currentSupervisor = \App\Models\Supervisor::find($operation->supervisor_id);
+                                                                    $isSelected = $currentSupervisor && $currentSupervisor->supervisor_id == $supervisor->supervisor_id;
+                                                                }
+                                                                // Also check old input
+                                                                $isSelected = $isSelected || old('supervisor_id') == $supervisor->supervisor_id;
+                                                            @endphp
                                                             <option value="{{ $supervisor->supervisor_id }}"
-                                                                {{ (old('supervisor_id', $operation->supervisor_id) == $supervisor->supervisor_id) ? 'selected' : '' }}>
+                                                                {{ $isSelected ? 'selected' : '' }}>
                                                                 {{ $supervisor->name }}
                                                             </option>
                                                         @endforeach
-                                                        <option value="other"
-                                                            {{ (old('supervisor_id', $operation->supervisor_id) == 'other' || (!empty($operation->supervisor_name) && !in_array($operation->supervisor_id, $supervisors->pluck('supervisor_id')->toArray()))) ? 'selected' : '' }}>
-                                                            Other
-                                                        </option>
                                                     </select>
-                                                    <small class="form-text text-muted">If your supervisor is not listed, choose "Other" and type the name.</small>
-                                                </div>
-
-                                                <div class="form-group mt-2" id="supervisor_name_group"
-                                                    style="{{ (old('supervisor_id', $operation->supervisor_id) == 'other' || (!empty($operation->supervisor_name) && !in_array($operation->supervisor_id, $supervisors->pluck('supervisor_id')->toArray()))) ? 'display: block;' : 'display: none;' }}">
-                                                    <label class="form-label">Supervisor Name</label>
-                                                    <input type="text" name="supervisor_name" class="form-control"
-                                                        placeholder="Enter supervisor's name"
-                                                        value="{{ old('supervisor_name', $operation->supervisor_name) }}">
+                                                    <small class="form-text text-muted">
+                                                        Please select your assigned supervisor from the list.
+                                                    </small>
+                                                    @error('supervisor_id')
+                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                    @enderror
                                                 </div>
                                             </div>
                                         </div>
@@ -234,7 +240,15 @@
                                                         <p><strong>Time:</strong> <span id="summary-time" class="text-muted">{{ $operation->procedure_time ?? 'Not set' }}</span></p>
                                                         <p><strong>Duration:</strong> <span id="summary-duration" class="text-muted">{{ $operation->duration ? $operation->duration . ' minutes' : 'Not set' }}</span></p>
                                                         <p><strong>Participation:</strong> <span id="summary-participation" class="text-muted">{{ $operation->participation_type ?? 'Not selected' }}</span></p>
-                                                        <p><strong>Supervisor:</strong> <span id="summary-supervisor" class="text-muted">{{ $operation->supervisor_name ?? ($operation->supervisor->name ?? 'Not selected') }}</span></p>
+                                                        <p><strong>Supervisor:</strong> <span id="summary-supervisor" class="text-muted">
+                                                            @if($operation->supervisor_id)
+                                                                {{ $operation->supervisor->name ?? 'Unknown Supervisor' }}
+                                                            @elseif($operation->supervisor_name)
+                                                                {{ $operation->supervisor_name }}
+                                                            @else
+                                                                Not selected
+                                                            @endif
+                                                        </span></p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -453,7 +467,8 @@
                     const time = document.querySelector('[name="procedure_time"]').value;
                     const duration = document.querySelector('[name="duration"]').value;
                     const participation = document.querySelector('[name="participation_type"]').value;
-                    if (!date || !time || !duration || !participation) {
+                    const supervisor = document.querySelector('[name="supervisor_id"]').value;
+                    if (!date || !time || !duration || !participation || !supervisor) {
                         if (showErrors) {
                             toastr.error('Please fill in all required procedure details.');
                         }
@@ -510,15 +525,6 @@
             }
         }
 
-        $('#supervisor_id').on('change', function() {
-            if ($(this).val() === 'other') {
-                $('#supervisor_name_group').show();
-            } else {
-                $('#supervisor_name_group').hide();
-                $('input[name="supervisor_name"]').val(''); // Clear input
-            }
-        });
-
         function updateSummary() {
             const rotationSelect = document.querySelector('[name="rotation_id"]');
             const objectiveSelect = document.querySelector('[name="objective_id"]');
@@ -527,7 +533,6 @@
             const duration = document.querySelector('[name="duration"]').value;
             const participationSelect = document.querySelector('[name="participation_type"]');
             const supervisorSelect = document.querySelector('[name="supervisor_id"]');
-            const supervisorName = document.querySelector('[name="supervisor_name"]').value;
 
             document.getElementById('summary-rotation').textContent =
                 rotationSelect.selectedOptions[0]?.text || 'Not selected';
@@ -542,13 +547,44 @@
             
             // Handle supervisor display
             let supervisorDisplay = 'Not selected';
-            if (supervisorSelect.value === 'other' && supervisorName) {
-                supervisorDisplay = supervisorName;
-            } else if (supervisorSelect.selectedOptions[0]) {
+            if (supervisorSelect.selectedOptions[0] && supervisorSelect.value) {
                 supervisorDisplay = supervisorSelect.selectedOptions[0].text;
             }
             document.getElementById('summary-supervisor').textContent = supervisorDisplay;
         }
+
+        // Add AJAX functionality for rotation change
+        $('#rotation_id').on('change', function() {
+            const rotationId = $(this).val();
+            const objectiveSelect = $('#objective_id');
+            
+            // Clear and disable objective select
+            objectiveSelect.empty().append('<option value="">Loading objectives...</option>');
+            
+            if (rotationId) {
+                // Fetch objectives for selected rotation using the correct route
+                $.ajax({
+                    url: `{{ url('/objectives/by-rotation') }}/${rotationId}`,
+                    type: 'GET',
+                    success: function(objectives) {
+                        objectiveSelect.empty().append('<option value="">Select Objective</option>');
+                        
+                        objectives.forEach(function(objective) {
+                            objectiveSelect.append(
+                                `<option value="${objective.id}">${objective.objective_code} - ${objective.description}</option>`
+                            );
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', xhr.responseText);
+                        objectiveSelect.empty().append('<option value="">Error loading objectives</option>');
+                        toastr.error('Failed to load objectives for the selected rotation.');
+                    }
+                });
+            } else {
+                objectiveSelect.empty().append('<option value="">Select Objective</option>');
+            }
+        });
 
         // Initialize when document is ready
         $(document).ready(function() {

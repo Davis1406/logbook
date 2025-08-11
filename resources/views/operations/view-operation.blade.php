@@ -3,7 +3,7 @@
     <div class="page-wrapper">
         <div class="content container-fluid">
             <div class="page-header">
-                <h3>Operation Details</h3>
+                <h3>Activity Details</h3>
             </div>
             <div class="row">
                 @if (Session::get('role_name') !== 'Trainee')

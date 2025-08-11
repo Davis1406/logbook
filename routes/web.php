@@ -76,7 +76,7 @@ Route::controller(HomeController::class)->group(function () {
     Route::get('/home', 'index')->middleware('auth')->name('home');
     Route::get('user/profile/page', 'userProfile')->middleware('auth')->name('user/profile/page');
     Route::get('supervisor/dashboard', 'teacherDashboardIndex')->middleware('auth')->name('supervisor/dashboard');
-    Route::get('traineee/dashboard', 'studentDashboardIndex')->middleware('auth')->name('trainee/dashboard');
+    Route::get('trainee/dashboard', 'studentDashboardIndex')->middleware('auth')->name('trainee/dashboard');
 });
 
 // ----------------------------- user controller -------------------------//
@@ -163,20 +163,13 @@ Route::controller(ObjectiveController::class)->group(function () {
 
 // ----------------------- operations -----------------------------//
 Route::controller(OperationController::class)->group(function () {
-    // Admin/Trainee List Views
     Route::get('operations/list', 'list')->middleware('auth')->name('operations/list');
-    
-    // Trainee: Add / Edit Own
     Route::get('operations/add', 'create')->middleware('auth')->name('operations/add');
     Route::post('operations/store', 'store')->middleware('auth')->name('operations/store');
     Route::get('operations/edit/{id}', 'edit')->middleware('auth')->name('operations/edit');
     Route::post('operations/update/{id}', 'update')->middleware('auth')->name('operations/update');
-
-    // Supervisor: Approve/Reject Operation
-    Route::get('operations/approve/{id}', 'approve')->middleware('auth')->name('operations/approve');
-    Route::get('operations/reject/{id}', 'reject')->middleware('auth')->name('operations/reject');
-
-    // Common: View & Delete
     Route::get('operation/view/{id}', 'view')->middleware('auth')->name('operation/view');
     Route::get('operations/delete/{id}', 'destroy')->middleware('auth')->name('operations/delete');
+    Route::get('/objectives/by-rotation/{rotation_id}', 'getObjectivesByRotation')->middleware('auth')->name('objectives.by-rotation');
 });
+

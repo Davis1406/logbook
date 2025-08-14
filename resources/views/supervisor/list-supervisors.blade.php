@@ -46,9 +46,12 @@
                                         <h3 class="page-title">Supervisors</h3>
                                     </div>
                                     <div class="col-auto text-end">
-                                        <a href="{{ route('supervisor/grid/page') }}" class="btn btn-outline-gray me-2"><i class="feather-grid"></i></a>
-                                        <a href="#" class="btn btn-outline-primary me-2"><i class="fas fa-download"></i> Download</a>
-                                        <a href="{{ route('supervisor/add') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+                                        <a href="{{ route('supervisor/grid/page') }}" class="btn btn-outline-gray me-2"><i
+                                                class="feather-grid"></i></a>
+                                        <a href="#" class="btn btn-outline-primary me-2"><i
+                                                class="fas fa-download"></i> Download</a>
+                                        <a href="{{ route('supervisor/add') }}" class="btn btn-primary"><i
+                                                class="fas fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -73,14 +76,14 @@
                                         @foreach ($listSupervisor as $list)
                                             <tr>
                                                 <td>
-                                                    <input class="form-check-input" type="checkbox" value="{{ $list->id }}">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        value="{{ $list->id }}">
                                                 </td>
                                                 <td>{{ $list->user_id }}</td>
                                                 <td>
                                                     <a href="#" class="avatar avatar-sm me-2">
-                                                        <img class="avatar-img rounded-circle"
-                                                             src="{{ $list->avatar ? asset('storage/' . $list->avatar) : asset('images/photo_defaults.jpg') }}"
-                                                             alt="{{ $list->name }}" width="40" height="40">
+                                                        <img class="avatar-img rounded-circle" src="{{ $list->image_url }}"
+                                                            alt="{{ $list->name }}" width="40" height="40">
                                                     </a>
                                                 </td>
                                                 <td>{{ $list->name }}</td>
@@ -91,10 +94,13 @@
                                                 <td>{{ $list->hospital_name ?? 'N/A' }}</td>
                                                 <td class="text-end">
                                                     <div class="actions">
-                                                        <a href="{{ url('supervisor/edit/' . $list->id) }}" class="btn btn-sm bg-danger-light">
+                                                        <a href="{{ url('supervisor/edit/' . $list->id) }}"
+                                                            class="btn btn-sm bg-danger-light">
                                                             <i class="feather-edit"></i>
                                                         </a>
-                                                        <a href="#" class="btn btn-sm bg-danger-light teacher_delete" data-bs-toggle="modal" data-bs-target="#teacherDelete" data-id="{{ $list->id }}">
+                                                        <a href="#" class="btn btn-sm bg-danger-light teacher_delete"
+                                                            data-bs-toggle="modal" data-bs-target="#teacherDelete"
+                                                            data-id="{{ $list->id }}">
                                                             <i class="feather-trash-2 me-1"></i>
                                                         </a>
                                                     </div>
@@ -116,7 +122,8 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content doctor-profile">
                 <div class="modal-header pb-0 border-bottom-0 justify-content-end">
-                    <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close"><i class="feather-x-circle"></i></button>
+                    <button type="button" class="close-btn" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="feather-x-circle"></i></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('supervisor/delete') }}" method="POST">
@@ -141,7 +148,7 @@
 
 @section('script')
     <script>
-        $(document).on('click', '.teacher_delete', function () {
+        $(document).on('click', '.teacher_delete', function() {
             const id = $(this).data('id');
             $('#deleteSupervisorId').val(id);
         });

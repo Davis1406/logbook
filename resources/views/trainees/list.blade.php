@@ -78,7 +78,7 @@
                                         <td hidden class="id">{{ $trainee->id }}</td>
                                         <td hidden class="avatar">{{ $trainee->upload }}</td>
                                         <td>
-                                            <img src="{{ Storage::url('app/public/'.$trainee->upload) }}" class="avatar-img rounded-circle" width="40" height="40" alt="Photo">
+                                            <img src="{{ $trainee->image_url }}" class="avatar-img rounded-circle" width="40" height="40" alt="Photo">
                                         </td>
                                         <td>{{ $trainee->first_name }} {{ $trainee->last_name }}</td>
                                         <td>{{ $trainee->gender }}</td>

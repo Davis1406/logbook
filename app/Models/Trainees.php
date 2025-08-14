@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Trainees extends Model
 {
@@ -26,6 +27,25 @@ class Trainees extends Model
         'upload',
     ];
 
+    /**
+     * Get the trainee's image URL based on environment
+     */
+    public function getImageUrlAttribute()
+    {
+        $baseUrl = config('app.url');
+
+        if (!$this->upload) {
+            // Handle placeholder when no image is uploaded
+            return app()->environment('local')
+                ? $baseUrl . '/storage/app/public/trainees-photos/placeholder.jpg'
+                : $baseUrl . '/storage/trainees-photos/placeholder.jpg';
+        }
+
+        // Handle actual uploaded images
+        return app()->environment('local')
+            ? $baseUrl . '/storage/app/public/' . $this->upload
+            : Storage::url($this->upload);
+    }
     /**
      * Relationships
      */

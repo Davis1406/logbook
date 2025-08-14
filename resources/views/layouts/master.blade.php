@@ -51,16 +51,15 @@
             <ul class="nav user-menu">
 
                 <!-- Dark Mode Toggle Button -->
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#" role="button" id="darkModeToggle" title="Toggle Dark Mode">
                         <i class="fas fa-moon" id="darkModeIcon"></i>
                     </a>
-                </li>
-
-
+                </li> --}}
+                <!-- Replace this section in your master.blade.php -->
                 <li class="nav-item zoom-screen me-2">
                     <a href="#" class="nav-link header-nav-list win-maximize">
-                        <img src="assets/img/icons/header-icon-04.svg" alt="">
+                        <img src="{{ URL::to('assets/img/icons/header-icon-04.svg') }}" alt="">
                     </a>
                 </li>
                 @php
@@ -124,35 +123,35 @@
     <script src="{{ URL::to('assets/js/script.js') }}"></script>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const toggle = document.getElementById('darkModeToggle');
-        const icon = document.getElementById('darkModeIcon');
+        document.addEventListener("DOMContentLoaded", function() {
+            const toggle = document.getElementById('darkModeToggle');
+            const icon = document.getElementById('darkModeIcon');
 
-        function applyTheme(isDark) {
-            if (isDark) {
-                document.body.classList.add('dark-theme');
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                document.body.classList.remove('dark-theme');
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
+            function applyTheme(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-theme');
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
             }
-        }
 
-        // Initial state from localStorage
-        const isDarkSaved = localStorage.getItem('dark-theme-enabled') === 'true';
-        applyTheme(isDarkSaved);
+            // Initial state from localStorage
+            const isDarkSaved = localStorage.getItem('dark-theme-enabled') === 'true';
+            applyTheme(isDarkSaved);
 
-        // Toggle on click
-        toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            const isDark = !document.body.classList.contains('dark-theme');
-            applyTheme(isDark);
-            localStorage.setItem('dark-theme-enabled', isDark);
+            // Toggle on click
+            toggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isDark = !document.body.classList.contains('dark-theme');
+                applyTheme(isDark);
+                localStorage.setItem('dark-theme-enabled', isDark);
+            });
         });
-    });
-</script>
+    </script>
     @yield('script')
     @stack('scripts')
 </body>

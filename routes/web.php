@@ -115,7 +115,7 @@ Route::controller(SupervisorController::class)->group(function () {
     Route::get('supervisor/grid/page', 'supervisorGrid')->middleware('auth')->name('supervisor/grid/page'); // page grid supervisor
     Route::post('supervisor/save', 'saveRecord')->middleware('auth')->name('supervisor/save'); // save record
     Route::get('supervisor/edit/{id}', 'editSupervisor'); // view supervisor record
-    Route::post('supervisor/update', 'updateRecordSupervisor')->middleware('auth')->name('supervisor/update'); // update record
+    Route::post('supervisor/update/{id}', 'updateSupervisor')->middleware('auth')->name('supervisor/update'); // update record
     Route::post('supervisor/delete', 'supervisorDelete')->name('supervisor/delete'); // delete record 
 });
 

@@ -36,7 +36,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-xl-3 col-sm-6 col-12 d-flex">
                     <div class="card bg-comman w-100">
                         <div class="card-body">
@@ -47,13 +47,13 @@
                                     <small class="text-muted">{{ $approvedDuration }} mins</small>
                                 </div>
                                 <div class="db-icon">
-                                    <img src="{{URL::to('assets/img/icons/student-icon-02.svg')}}" alt="Approved Icon">
+                                    <img src="{{ URL::to('assets/img/icons/student-icon-02.svg') }}" alt="Approved Icon">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-xl-3 col-sm-6 col-12 d-flex">
                     <div class="card bg-comman w-100">
                         <div class="card-body">
@@ -64,13 +64,13 @@
                                     <small class="text-muted">Awaiting approval</small>
                                 </div>
                                 <div class="db-icon">
-                                    <img src="{{URL::to('assets/img/icons/student-icon-01.svg')}}" alt="Pending Icon">
+                                    <img src="{{ URL::to('assets/img/icons/student-icon-01.svg') }}" alt="Pending Icon">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="col-xl-3 col-sm-6 col-12 d-flex">
                     <div class="card bg-comman w-100">
                         <div class="card-body">
@@ -81,7 +81,7 @@
                                     <small class="text-muted">{{ $thisMonthOperations->sum('duration') }} mins</small>
                                 </div>
                                 <div class="db-icon">
-                                    <img src="{{URL::to('assets/img/icons/teacher-icon-02.svg')}}" alt="Monthly Icon">
+                                    <img src="{{ URL::to('assets/img/icons/teacher-icon-02.svg') }}" alt="Monthly Icon">
                                 </div>
                             </div>
                         </div>
@@ -105,8 +105,10 @@
                                             <span class="circle-green"></span>
                                             <span class="circle-gray"></span>
                                         </li>
-                                        <li class="lesson-view-all"><a href="{{ route('operations/list') }}">View All Activities</a></li>
-                                        <li class="star-menus"><a href="javascript:;"><i class="fas fa-ellipsis-v"></i></a></li>
+                                        <li class="lesson-view-all"><a href="{{ route('operations/list') }}">View All
+                                                Activities</a></li>
+                                        <li class="star-menus"><a href="javascript:;"><i class="fas fa-ellipsis-v"></i></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -115,7 +117,8 @@
                             <div class="row">
                                 <div class="col-lg-3 col-md-3 dash-widget1">
                                     <div class="circle-bar circle-bar2">
-                                        <div class="circle-graph2" data-percent="{{ $totalOperations > 0 ? round(($approvedOperations / $totalOperations) * 100) : 0 }}">
+                                        <div class="circle-graph2"
+                                            data-percent="{{ $totalOperations > 0 ? round(($approvedOperations / $totalOperations) * 100) : 0 }}">
                                             <b>{{ $totalOperations > 0 ? round(($approvedOperations / $totalOperations) * 100) : 0 }}%</b>
                                         </div>
                                     </div>
@@ -124,7 +127,8 @@
                                     <div class="dash-details">
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-01.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-01.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Rotations</h5>
@@ -133,7 +137,8 @@
                                         </div>
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-02.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-02.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Objectives</h5>
@@ -142,7 +147,8 @@
                                         </div>
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-03.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-03.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Total Time</h5>
@@ -155,7 +161,8 @@
                                     <div class="dash-details">
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-04.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-04.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Observed</h5>
@@ -164,7 +171,8 @@
                                         </div>
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-05.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-05.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Assisted</h5>
@@ -173,7 +181,8 @@
                                         </div>
                                         <div class="lesson-activity">
                                             <div class="lesson-imgs">
-                                                <img src="{{URL::to('assets/img/icons/lesson-icon-06.svg')}}" alt="">
+                                                <img src="{{ URL::to('assets/img/icons/lesson-icon-06.svg') }}"
+                                                    alt="">
                                             </div>
                                             <div class="views-lesson">
                                                 <h5>Performed</h5>
@@ -183,9 +192,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-3 col-md-3 d-flex align-items-center justify-content-center">
-                                    <div class="skip-group">
-                                        <a href="{{ route('operations/add') }}" class="btn btn-info continue-btn">Log Activity</a>
-                                        <a href="{{ route('operations/list') }}" class="btn btn-outline-info skip-btn">View History</a>
+                                    <div class="skip-group d-flex flex-column gap-2 w-100">
+                                        <a href="{{ route('operations/add') }}" class="btn btn-info continue-btn">
+                                            <i class="fas fa-plus me-1"></i>Log Activity
+                                        </a>
+                                        <a href="{{ route('operations/list') }}" class="btn btn-outline-info skip-btn">
+                                            <i class="fas fa-list me-1"></i>View History
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -204,9 +217,9 @@
                         </div>
                         <div class="card-body">
                             <div class="teaching-card">
-                                @if($recentOperations->count() > 0)
+                                @if ($recentOperations->count() > 0)
                                     <ul class="activity-feed">
-                                        @foreach($recentOperations as $operation)
+                                        @foreach ($recentOperations as $operation)
                                             <li class="feed-item d-flex align-items-center">
                                                 <div class="dolor-activity">
                                                     <span class="feed-text1">
@@ -215,19 +228,27 @@
                                                         </a>
                                                     </span>
                                                     <ul class="teacher-date-list">
-                                                        <li><i class="fas fa-calendar-alt me-2"></i>{{ \Carbon\Carbon::parse($operation->procedure_date)->format('M d, Y') }}</li>
+                                                        <li><i
+                                                                class="fas fa-calendar-alt me-2"></i>{{ \Carbon\Carbon::parse($operation->procedure_date)->format('M d, Y') }}
+                                                        </li>
                                                         <li>|</li>
-                                                        <li><i class="fas fa-clock me-2"></i>{{ $operation->procedure_time }} ({{ $operation->duration }}min)</li>
+                                                        <li><i
+                                                                class="fas fa-clock me-2"></i>{{ $operation->procedure_time }}
+                                                            ({{ $operation->duration }}min)</li>
                                                     </ul>
-                                                    <small class="text-muted">{{ $operation->rotation->rotation_name ?? 'N/A' }}</small>
+                                                    <small
+                                                        class="text-muted">{{ $operation->rotation->rotation_name ?? 'N/A' }}</small>
                                                 </div>
                                                 <div class="activity-btns ms-auto">
-                                                    @if($operation->status == 'approved')
-                                                        <button type="button" class="btn btn-sm btn-success">Approved</button>
+                                                    @if ($operation->status == 'approved')
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-success">Approved</button>
                                                     @elseif($operation->status == 'rejected')
-                                                        <button type="button" class="btn btn-sm btn-danger">Rejected</button>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-danger">Rejected</button>
                                                     @else
-                                                        <button type="button" class="btn btn-sm btn-warning">Pending</button>
+                                                        <button type="button"
+                                                            class="btn btn-sm btn-warning">Pending</button>
                                                     @endif
                                                 </div>
                                             </li>
@@ -235,9 +256,11 @@
                                     </ul>
                                 @else
                                     <div class="text-center py-4">
-                                        <img src="{{URL::to('assets/img/icons/lesson-icon-01.svg')}}" alt="No Operations" class="mb-3" style="opacity: 0.5;">
+                                        <img src="{{ URL::to('assets/img/icons/lesson-icon-01.svg') }}"
+                                            alt="No Operations" class="mb-3" style="opacity: 0.5;">
                                         <h6 class="text-muted">No activity logged yet</h6>
-                                        <p class="text-muted">Start logging your surgical operations to track your progress.</p>
+                                        <p class="text-muted">Start logging your surgical operations to track your
+                                            progress.</p>
                                         <a href="{{ route('operations/add') }}" class="btn btn-primary btn-sm">
                                             <i class="fas fa-plus"></i> Log First Activity
                                         </a>
@@ -288,158 +311,161 @@
 @endsection
 
 @section('script')
-{{-- ApexCharts Script --}}
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Debug: Log the data to console
-        console.log('Monthly Data:', @json($monthlyData));
-        
-        const monthlyData = @json($monthlyData);
-        
-        // Check if data exists and create the chart
-        if (monthlyData && monthlyData.length > 0) {
-            try {
-                // Monthly Activity Chart using ApexCharts
-                var monthlyOptions = {
-                    series: [{
-                        name: 'Total',
-                        data: monthlyData.map(item => item.total || 0)
-                    }, {
-                        name: 'Approved',
-                        data: monthlyData.map(item => item.approved || 0)
-                    }, {
-                        name: 'Pending',
-                        data: monthlyData.map(item => item.pending || 0)
-                    }, {
-                        name: 'Rejected',
-                        data: monthlyData.map(item => item.rejected || 0)
-                    }],
-                    chart: {
-                        type: 'area',
-                        height: 350,
-                        stacked: false,
-                        toolbar: {
-                            show: true,
-                            tools: {
-                                download: true,
-                                selection: true,
-                                zoom: true,
-                                zoomin: true,
-                                zoomout: true,
-                                pan: true,
-                                reset: true
-                            }
-                        },
-                        animations: {
-                            enabled: true,
-                            easing: 'easeinout',
-                            speed: 800,
-                            animateGradually: {
-                                enabled: true,
-                                delay: 150
+    {{-- ApexCharts Script --}}
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Debug: Log the data to console
+            console.log('Monthly Data:', @json($monthlyData));
+
+            const monthlyData = @json($monthlyData);
+
+            // Check if data exists and create the chart
+            if (monthlyData && monthlyData.length > 0) {
+                try {
+                    // Monthly Activity Chart using ApexCharts
+                    var monthlyOptions = {
+                        series: [{
+                            name: 'Total',
+                            data: monthlyData.map(item => item.total || 0)
+                        }, {
+                            name: 'Approved',
+                            data: monthlyData.map(item => item.approved || 0)
+                        }, {
+                            name: 'Pending',
+                            data: monthlyData.map(item => item.pending || 0)
+                        }, {
+                            name: 'Rejected',
+                            data: monthlyData.map(item => item.rejected || 0)
+                        }],
+                        chart: {
+                            type: 'area',
+                            height: 350,
+                            stacked: false,
+                            toolbar: {
+                                show: true,
+                                tools: {
+                                    download: true,
+                                    selection: true,
+                                    zoom: true,
+                                    zoomin: true,
+                                    zoomout: true,
+                                    pan: true,
+                                    reset: true
+                                }
                             },
-                            dynamicAnimation: {
+                            animations: {
                                 enabled: true,
-                                speed: 350
+                                easing: 'easeinout',
+                                speed: 800,
+                                animateGradually: {
+                                    enabled: true,
+                                    delay: 150
+                                },
+                                dynamicAnimation: {
+                                    enabled: true,
+                                    speed: 350
+                                }
                             }
-                        }
-                    },
-                    colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
-                    dataLabels: {
-                        enabled: false
-                    },
-                    stroke: {
-                        curve: 'smooth',
-                        width: 3
-                    },
-                    fill: {
-                        type: 'gradient',
-                        gradient: {
-                            shadeIntensity: 1,
-                            inverseColors: false,
-                            opacityFrom: 0.5,
-                            opacityTo: 0,
-                            stops: [0, 90, 100]
-                        }
-                    },
-                    xaxis: {
-                        categories: monthlyData.map(item => item.month),
-                        labels: {
-                            style: {
-                                colors: '#666',
-                                fontSize: '12px'
-                            }
-                        }
-                    },
-                    yaxis: {
-                        title: {
-                            text: 'Number of Operations'
                         },
-                        labels: {
-                            style: {
-                                colors: '#666',
-                                fontSize: '12px'
+                        colors: ['#007bff', '#28a745', '#ffc107', '#dc3545'],
+                        dataLabels: {
+                            enabled: false
+                        },
+                        stroke: {
+                            curve: 'smooth',
+                            width: 3
+                        },
+                        fill: {
+                            type: 'gradient',
+                            gradient: {
+                                shadeIntensity: 1,
+                                inverseColors: false,
+                                opacityFrom: 0.5,
+                                opacityTo: 0,
+                                stops: [0, 90, 100]
+                            }
+                        },
+                        xaxis: {
+                            categories: monthlyData.map(item => item.month),
+                            labels: {
+                                style: {
+                                    colors: '#666',
+                                    fontSize: '12px'
+                                }
+                            }
+                        },
+                        yaxis: {
+                            title: {
+                                text: 'Number of Operations'
+                            },
+                            labels: {
+                                style: {
+                                    colors: '#666',
+                                    fontSize: '12px'
+                                }
+                            }
+                        },
+                        legend: {
+                            position: 'top',
+                            horizontalAlign: 'left',
+                            floating: true,
+                            offsetY: -10,
+                            offsetX: 0,
+                            fontSize: '12px',
+                            markers: {
+                                width: 10,
+                                height: 10,
+                                radius: 5
+                            }
+                        },
+                        grid: {
+                            borderColor: '#e0e0e0',
+                            strokeDashArray: 3
+                        },
+                        tooltip: {
+                            shared: true,
+                            intersect: false,
+                            y: {
+                                formatter: function(val) {
+                                    return val + " operations"
+                                }
                             }
                         }
-                    },
-                    legend: {
-                        position: 'top',
-                        horizontalAlign: 'left',
-                        floating: true,
-                        offsetY: -10,
-                        offsetX: 0,
-                        fontSize: '12px',
-                        markers: {
-                            width: 10,
-                            height: 10,
-                            radius: 5
-                        }
-                    },
-                    grid: {
-                        borderColor: '#e0e0e0',
-                        strokeDashArray: 3
-                    },
-                    tooltip: {
-                        shared: true,
-                        intersect: false,
-                        y: {
-                            formatter: function (val) {
-                                return val + " operations"
-                            }
-                        }
-                    }
-                };
+                    };
 
-                var monthlyChart = new ApexCharts(document.querySelector("#monthlyActivityChart"), monthlyOptions);
-                monthlyChart.render();
-                
-                console.log('ApexCharts rendered successfully');
-                
-            } catch (error) {
-                console.error('Error rendering ApexCharts:', error);
+                    var monthlyChart = new ApexCharts(document.querySelector("#monthlyActivityChart"),
+                        monthlyOptions);
+                    monthlyChart.render();
+
+                    console.log('ApexCharts rendered successfully');
+
+                } catch (error) {
+                    console.error('Error rendering ApexCharts:', error);
+                }
+            } else {
+                console.log('No data available for chart');
+                document.querySelector("#monthlyActivityChart").innerHTML =
+                    '<div class="text-center py-5"><p class="text-muted">No data available</p></div>';
             }
-        } else {
-            console.log('No data available for chart');
-            document.querySelector("#monthlyActivityChart").innerHTML = '<div class="text-center py-5"><p class="text-muted">No data available</p></div>';
-        }
 
-        // Progress circle animation
-        const progressCircle = document.querySelector('.circle-graph2');
-        if (progressCircle) {
-            const percent = parseInt(progressCircle.getAttribute('data-percent')) || 0;
-            
-            // Animate the circle
-            setTimeout(() => {
-                progressCircle.style.background = `conic-gradient(#007bff 0% ${percent}%, #e9ecef ${percent}% 100%)`;
-                progressCircle.style.transition = 'background 1s ease-in-out';
-            }, 500);
-        }
-    });
+            // Progress circle animation
+            const progressCircle = document.querySelector('.circle-graph2');
+            if (progressCircle) {
+                const percent = parseInt(progressCircle.getAttribute('data-percent')) || 0;
 
-    // Print report function
-    function printReport() {
-        const printContent = `
+                // Animate the circle
+                setTimeout(() => {
+                    progressCircle.style.background =
+                        `conic-gradient(#007bff 0% ${percent}%, #e9ecef ${percent}% 100%)`;
+                    progressCircle.style.transition = 'background 1s ease-in-out';
+                }, 500);
+            }
+        });
+
+        // Print report function
+        function printReport() {
+            const printContent = `
             <!DOCTYPE html>
             <html>
             <head>
@@ -479,15 +505,15 @@
             </body>
             </html>
         `;
-        
-        const printWindow = window.open('', '_blank');
-        printWindow.document.write(printContent);
-        printWindow.document.close();
-        printWindow.print();
-    }
-</script>
 
-<style>
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(printContent);
+            printWindow.document.close();
+            printWindow.print();
+        }
+    </script>
+
+    <style>
     .circle-bar2 {
         display: flex;
         align-items: center;
@@ -587,10 +613,67 @@
         min-height: 400px;
     }
     
+    /* Skip Group Button Styling */
+    .skip-group {
+        min-width: 160px;
+    }
+
+    .skip-group .btn {
+        padding: 10px 20px;
+        font-weight: 500;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .skip-group .continue-btn:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+    }
+
+    .skip-group .skip-btn:hover {
+        background-color: #17a2b8;
+        color: white;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(23, 162, 184, 0.2);
+    }
+    
     /* Responsive adjustments */
+    @media (max-width: 992px) {
+        .skip-group {
+            flex-direction: row !important;
+            gap: 10px !important;
+        }
+        
+        .skip-group .btn {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+        
+        #monthlyActivityChart {
+            height: 300px !important;
+        }
+    }
+
     @media (max-width: 768px) {
         #monthlyActivityChart {
             height: 300px !important;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .skip-group {
+            flex-direction: column !important;
+            gap: 8px !important;
+        }
+        
+        .skip-group .btn {
+            width: 100%;
+            padding: 10px;
         }
     }
     
@@ -603,4 +686,5 @@
         justify-content: center !important;
     }
 </style>
+
 @endsection

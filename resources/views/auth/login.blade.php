@@ -8,9 +8,9 @@
                 <img src="{{ asset('assets/img/logo.png') }}" alt="Ecsaconm Logo" style="max-width: 120px;">
             </div>
 
-            <p class="account-subtitle text-center mb-3">
+            {{-- <p class="account-subtitle text-center mb-3">
                 Need an account? <a href="{{ route('register') }}">Sign Up</a>
-            </p>
+            </p> --}}
             {{-- <h2 class="text-center mb-4">Sign in</h2> --}}
 
             <form action="{{ route('login') }}" method="POST">

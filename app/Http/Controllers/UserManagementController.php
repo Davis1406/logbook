@@ -38,6 +38,14 @@ class UserManagementController extends Controller
 
     public function storeUser(Request $request)
     {
+        // Only Admin/Super Admin may create users, and only they may hand
+        // out privileged roles. The route only requires 'auth', so any
+        // logged-in user could otherwise reach this and self-elevate.
+        if (! in_array(Session::get('role_name'), ['Admin', 'Super Admin'], true)) {
+            Toastr::error('You are not authorized to create users.', 'Error');
+            return redirect()->back();
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
